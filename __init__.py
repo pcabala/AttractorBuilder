@@ -1,5 +1,5 @@
 # Blender 4.x — Attractor builder (panel + operator)
-
+# test change
 bl_info = {
     "name": "Attractor Builder",
     "author": "Paweł Cabała",
