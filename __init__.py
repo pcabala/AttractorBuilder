@@ -1089,6 +1089,31 @@ class ATTRACTOR_OT_smooth_apply(bpy.types.Operator):
 # 10. Blender UI Panels
 # ==========================================================================
 
+def _defer_apply_defaults(scene_name: str, attractor_type: str):
+    """Apply JSON defaults safely after UI draw (no writes in draw())."""
+    def _do():
+        # Resolve scene (works in unsaved files, too)
+        scene = bpy.data.scenes.get(scene_name) or getattr(bpy.context, "scene", None)
+        if not scene:
+            return None  # stop timer
+
+        P = getattr(scene, "attractor_props", None)
+        if not P:
+            return None
+
+        entry = lib_manager.default_systems.get(attractor_type) if lib_manager else None
+        if not entry:
+            return None
+
+        # Idempotent: only apply if not already in desired state
+        want = (entry.get("defaults") or {}).get("scale")
+        if (len(P.custom_params) == 0) or (want is not None and abs(P.scale - float(want)) > 1e-9):
+            apply_snapshot_to_props(P, entry)
+
+        return None  # run once
+    bpy.app.timers.register(_do, first_interval=0.0)
+
+
 class ATTRACTOR_PT_panel(bpy.types.Panel):
     """The main UI panel for generating attractors."""
     bl_label = "Attractor Builder"
@@ -1100,6 +1125,14 @@ class ATTRACTOR_PT_panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         P = context.scene.attractor_props
+        # --- Ensure JSON defaults are applied on first open (no extra flags/handlers) ---
+        if P.mode == 'DEFAULT':
+            entry = lib_manager.default_systems.get(P.attractor_type)
+            if entry:
+                want = (entry.get("defaults") or {}).get("scale")
+                if (len(P.custom_params) == 0) or (want is not None and abs(P.scale - float(want)) > 1e-9):
+                    _defer_apply_defaults(context.scene.name, P.attractor_type)  # ← defer instead of writing in draw()
+
         layout.row().prop(P, "mode", expand=True)
 
         if P.mode == 'DEFAULT':
