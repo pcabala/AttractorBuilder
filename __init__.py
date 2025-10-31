@@ -7,7 +7,7 @@ bl_info = {
     "blender": (4, 0, 0),
     "location": "View3D > Sidebar > Attractor",
     "description": "Generate and visualize 3D chaotic attractors.",
-    "doc_url": "https://github.com/your-repo/AttractorBuilder",  # Recommended: Add a link to your documentation.
+    "doc_url": "https://github.com/pcabala/AttractorBuilder",  # Recommended: Add a link to your documentation.
     "license": "GPL-2.0-or-later",  # Mandatory for official addons.
     "category": "Add Curve",
 }
