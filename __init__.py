@@ -1,5 +1,5 @@
 # Blender 4.x — Attractor builder (panel + operator)
-# test change
+
 bl_info = {
     "name": "Attractor Builder",
     "author": "Paweł Cabała",
@@ -284,17 +284,21 @@ class AttractorLibraryManager:
         self.custom_enum_cache = items
 
     def get_default_enum_items(self):
-        """Returns sorted items for the default attractor EnumProperty."""
+        """Return enum items for defaults, ordering 'Lorenz' first, then alphabetical."""
         if not self.default_systems:
-            self.load_defaults() # Attempt to reload if empty.
-        if not self.default_systems:
-            return [("__NONE__", "No defaults found", "default_attractors.json could not be loaded")]
-        return sorted([(name, name, "") for name in self.default_systems.keys()], key=lambda it: it[0].lower())
+            return []
+        names = list(self.default_systems.keys())
+        # Sort so 'Lorenz' is first; others alphabetical (case-insensitive)
+        names.sort(key=lambda s: (s.lower() != "lorenz", s.lower()))
+        return [(n, n, "") for n in names]
+
 
     def get_first_default_name(self):
-        """Gets the name of the first available default attractor."""
+        """Pick a stable first default. Prefer 'Lorenz', else alphabetical first."""
         if self.default_systems:
-            return next(iter(self.default_systems), None)
+            if "Lorenz" in self.default_systems:
+                return "Lorenz"
+            return sorted(self.default_systems.keys(), key=str.lower)[0]
         return None
 
     def get_custom_enum_items(self):
@@ -752,11 +756,22 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
         try:
             if P.mode == "DEFAULT":
                 entry = lib_manager.default_systems.get(P.attractor_type)
-                if not entry:
-                    raise ValueError("Default attractor not found.")
                 rhs = entry.get("rhs", {})
+
+                if len(P.custom_params) == 0:
+                    P.custom_params.clear()
+                    for k, v in (entry.get("params") or {}).items():
+                        item = P.custom_params.add()
+                        try:
+                            item.name, item.value = k, float(v)
+                        except Exception:
+                            # Fallback in case JSON holds non-floats (e.g., strings like "0.95")
+                            item.name, item.value = k, float(str(v))
+
                 params = {p.name: p.value for p in P.custom_params}
+
                 rhs_func = build_rhs_function(rhs.get('dx'), rhs.get('dy'), rhs.get('dz'))
+
             else: # CUSTOM
                 if P.custom_validate_state != "OK":
                     raise ValueError("Custom equations are not validated.")
@@ -1270,33 +1285,36 @@ classes = (
 
 
 def register():
-    """Registers all addon classes and initializes data."""
+    # 1) Register classes
     for cls in classes:
         bpy.utils.register_class(cls)
 
+    # 2) Scene pointer
     bpy.types.Scene.attractor_props = bpy.props.PointerProperty(type=ATTRACTOR_Props)
 
-    # Initialize library manager and load all data on registration.
+    # 3) Library manager + initial loads (safe for unsaved files)
+    global lib_manager
+    lib_manager = AttractorLibraryManager()
     lib_manager.load_defaults()
     lib_manager.load_customs()
 
-    # Set an intelligent default attractor on first load.
+    # 4) Initialize UI state if a Scene exists (Preferences enable may have no scene)
     scene = getattr(bpy.context, "scene", None)
     if scene and hasattr(scene, "attractor_props"):
         P = scene.attractor_props
         P.mode = "DEFAULT"
 
-        preferred = "Lorenz" # A good, recognizable default.
-        chosen = preferred if preferred in lib_manager.default_systems else lib_manager.get_first_default_name()
-
+        # Prefer Lorenz if present; otherwise use your stable first default
+        chosen = "Lorenz" if "Lorenz" in lib_manager.default_systems else lib_manager.get_first_default_name()
         if chosen:
             P.attractor_type = chosen
-            try:
-                update_attractor_defaults(P, bpy.context)
-            except Exception as e:
-                print(f"[Attractor] Warning during initial default refresh: {e}")
+            # Seed parameters exactly as if the user selected it in the UI
+            update_attractor_defaults(P, bpy.context)
 
     print("Attractor Builder addon registered.")
+
+
+
 
 
 def unregister():
