@@ -407,7 +407,7 @@ def center_attractor_object(context: bpy.context, obj: bpy.types.Object):
 
     obj.location = (0.0, 0.0, 0.0)
     try:
-        obj.data.update()
+        obj.data.update_tag()
         obj.update_tag()
         context.view_layer.update()
     except RuntimeError:
@@ -456,7 +456,7 @@ def _build_bezier_on_object(obj, pts, handle_type):
 
     sp.use_cyclic_u = False
     try:
-        cu.update()
+        cu.update_tag()
         obj.update_tag()
     except RuntimeError:
         pass
@@ -671,7 +671,7 @@ def update_interactive_trim(self, context):
 
     write_polyline(obj.data, src[start_i : end_i + 1])
     try:
-        obj.data.update()
+        obj.data.update_tag()
         obj.update_tag()
         context.view_layer.update()
     except RuntimeError:
@@ -956,7 +956,7 @@ class ATTRACTOR_OT_custom_manage_library(bpy.types.Operator):
 class ATTRACTOR_OT_copy_to_custom(bpy.types.Operator):
     """Copies the current default attractor and its parameters to a new custom entry."""
     bl_idname = "attractor.copy_to_custom"
-    bl_label = "Copy to Custom"
+    bl_label = "Copy"
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
@@ -1170,13 +1170,17 @@ class ATTRACTOR_PT_panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         P = context.scene.attractor_props
-        # --- Ensure JSON defaults are applied on first open (no extra flags/handlers) ---
         if P.mode == 'DEFAULT':
             entry = lib_manager.default_systems.get(P.attractor_type)
-            if entry:
-                want = (entry.get("defaults") or {}).get("scale")
-                if (len(P.custom_params) == 0) or (want is not None and abs(P.scale - float(want)) > 1e-9):
-                    _defer_apply_defaults(context.scene.name, P.attractor_type)  # ← defer instead of writing in draw()
+        if entry:
+            fresh_like = (
+                len(P.custom_params) == 0
+                and abs(P.scale - 1.0) < 1e-9
+                and P.integration_approach == 'FIXED'
+                and P.method == 'RK4'
+            )
+            if fresh_like:
+                _defer_apply_defaults(context.scene.name, P.attractor_type)
 
         layout.row().prop(P, "mode", expand=True)
 
