@@ -69,7 +69,7 @@
       "source": "J. Lü & G. Chen (2002), 'A new chaotic attractor bridging the gap...'.",
       "details": "Experiment by lowering 'c' (toward ~15) to move toward less chaotic motion, or raising 'a' (~28–45) to widen the twin scrolls. Pushing 'c' far above ~20 can cause the simulation to diverge."
     },
-    "Aizawa": {
+    "Langford": {
       "rhs": {
         "dx": "(z - b) * x - d * y",
         "dy": "d * x + (z - b) * y",
@@ -83,7 +83,7 @@
         "steps": 15000, "burn_in": 2000, "scale": 0.9
       },
       "summary": "A complex attractor that can form a spherical or toroidal shell.",
-      "source": "Y. Aizawa & T. Uezu (1982), from 'Topological aspects of the Aizawa attractor'.",
+      "source": "Langford, W. F. (1984). <i>Numerical studies of torus bifurcations. Physica D: Nonlinear Phenomena, 10(1–2), 135–156",
       "details": "Experiment by lowering 'a' (~0.8) for quasi-periodic tori, or raising 'd' (~4.0) and 'e' (~0.3) to thicken the band. Increasing 'b' toward ~0.9 tends to damp the motion toward the center."
     },
     "Thomas": {
