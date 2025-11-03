@@ -7,7 +7,7 @@ bl_info = {
     "blender": (4, 0, 0),
     "location": "View3D > Sidebar > Attractor",
     "description": "Generate and visualize 3D chaotic attractors.",
-    "doc_url": "https://github.com/pcabala/AttractorBuilder",  # Recommended: Add a link to your documentation.
+    "doc_url": "https://github.com/pcabala/AttractorBuilder",
     "license": "GPL-2.0-or-later",  # Mandatory for official addons.
     "category": "Add Curve",
 }
@@ -315,20 +315,60 @@ lib_manager = AttractorLibraryManager()
 # ==========================================================================
 
 def make_or_get_curve(context, name: str) -> tuple[bpy.types.Curve, bpy.types.Object]:
-    """Finds or creates a curve data-block and object, linking it to the scene."""
-    cu = bpy.data.curves.get(name)
-    if cu is None:
-        cu = bpy.data.curves.new(name, type='CURVE')
-        cu.dimensions = '3D'
-        obj = bpy.data.objects.new(name, cu)
-        context.scene.collection.objects.link(obj)
+    """
+    Honor Output Name strictly:
+      - If an object with this exact name exists: reuse that object (overwrite its curve splines).
+      - If no such object exists: create a NEW object with that exact name.
+    Never reuse an existing curve *data* block by name (to avoid writing into other objects).
+    """
+    base = (name or "Attractor").strip()
+
+    # 1) Exact object match → reuse object, ensure it's a curve, clear splines
+    obj = bpy.data.objects.get(base)
+    if obj is not None:
+        # If it's not a curve, give it a curve datablock
+        if obj.type != 'CURVE':
+            cu = bpy.data.curves.new(f"{base}_Curve", type='CURVE')
+            cu.dimensions = '3D'
+            obj.data = cu
+        else:
+            cu = obj.data
+            # overwrite behavior: start fresh
+            if hasattr(cu, "splines"):
+                cu.splines.clear()
+
+        # make sure it's linked & visible in the active collection
+        target_coll = getattr(context, "collection", None) or context.scene.collection
+        if obj.name not in {o.name for o in target_coll.objects}:
+            try:
+                target_coll.objects.link(obj)
+            except RuntimeError:
+                pass  # already linked somewhere visible
+
+        obj.hide_set(False)
+        obj.hide_viewport = False
+        obj.hide_render = False
+        return cu, obj
+
+    # 2) No object with that name → create a brand-new object with EXACT name
+    cu = bpy.data.curves.new(f"{base}_Curve", type='CURVE')  # always new data to avoid collisions
+    cu.dimensions = '3D'
+
+    obj = bpy.data.objects.new(base, cu)  # object name == Output Name
+    (getattr(context, "collection", None) or context.scene.collection).objects.link(obj)
+
+    # visible + identity transform
+    obj.hide_set(False)
+    obj.hide_viewport = False
+    obj.hide_render = False
+    try:
         obj.matrix_world = Matrix.Identity(4)
-    else:
-        obj = next((o for o in context.scene.objects if o.data == cu), None)
-        if obj is None:
-            obj = bpy.data.objects.new(name, cu)
-            context.scene.collection.objects.link(obj)
+    except Exception:
+        pass
+
     return cu, obj
+
+
 
 
 def write_polyline(curve: bpy.types.Curve, points: list[Vector]):
@@ -750,6 +790,11 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
 
     def execute(self, context):
         P = context.scene.attractor_props
+
+        target_name = (getattr(P, "output_name", "") or "").strip() or "Attractor"
+        cu, obj = make_or_get_curve(context, target_name)
+        P.active_curve_name = obj.name
+        
         P.show_post_processing = False
         P.active_curve_name = ""
 
@@ -1281,6 +1326,11 @@ class ATTRACTOR_PT_post_processing(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         P = context.scene.attractor_props
+        obj = bpy.data.objects.get(P.active_curve_name)
+        if not obj or obj.type != 'CURVE':
+            return
+        cu = obj.data
+        
         box = layout.box()
 
         col = box.column(align=True)
