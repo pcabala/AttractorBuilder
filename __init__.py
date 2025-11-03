@@ -575,7 +575,8 @@ def _on_mode_change(self, context):
     self.show_simulation_tips = False
     self.show_custom_details = False
     if self.mode == "CUSTOM":
-        self.custom_selected = "__NONE__"
+        if self.custom_selected not in lib_manager.custom_library:
+            self.custom_selected = "__NONE__"
     elif self.mode == "DEFAULT":
         first_default = lib_manager.get_first_default_name()
         if first_default:
@@ -1170,18 +1171,17 @@ class ATTRACTOR_PT_panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         P = context.scene.attractor_props
+        entry = None
         if P.mode == 'DEFAULT':
             entry = lib_manager.default_systems.get(P.attractor_type)
-        if entry:
-            fresh_like = (
-                len(P.custom_params) == 0
-                and abs(P.scale - 1.0) < 1e-9
-                and P.integration_approach == 'FIXED'
-                and P.method == 'RK4'
-            )
-            if fresh_like:
-                _defer_apply_defaults(context.scene.name, P.attractor_type)
-
+            if entry:
+                fresh_like = (
+                    len(P.custom_params) == 0
+                    and abs(P.scale - 1.0) < 1e-9
+                    and P.integration_approach == 'FIXED'
+                    and P.method == 'RK4')
+                if fresh_like:
+                    _defer_apply_defaults(context.scene.name, P.attractor_type)
         layout.row().prop(P, "mode", expand=True)
 
         if P.mode == 'DEFAULT':
