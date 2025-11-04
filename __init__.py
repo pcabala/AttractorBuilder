@@ -4,11 +4,11 @@ bl_info = {
     "name": "Attractor Builder",
     "author": "Paweł Cabała",
     "version": (1, 8, 0),
-    "blender": (4, 0, 0),
+    "blender": (4, 5, 0),
     "location": "View3D > Sidebar > Attractor",
     "description": "Generate and visualize 3D chaotic attractors.",
     "doc_url": "https://github.com/pcabala/AttractorBuilder",
-    "license": "GPL-2.0-or-later",  # Mandatory for official addons.
+    "license": "GPL-2.0-or-later",
     "category": "Add Curve",
 }
 
