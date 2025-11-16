@@ -51,6 +51,8 @@ _original_curve_cache = {}
 _simplify_source_cache = {}
 _working_curve_cache = {}
 _smooth_source_cache = {}
+_raw_points_debug = []
+
 
 
 # ==========================================================================
@@ -825,6 +827,8 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                 rhs_func = build_rhs_function(P.custom_dx, P.custom_dy, P.custom_dz)
 
             p, points, wm = Vector((P.x0, P.y0, P.z0)), [], context.window_manager
+            global _raw_points_debug
+            _raw_points_debug = []
 
             if P.integration_approach == 'ADAPTIVE':
                 dt, pts_gen, burn_done = P.dt, 0, 0
@@ -838,6 +842,7 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                         if any(math.isnan(c) or math.isinf(c) for c in p):
                             raise ValueError("Numerical instability detected.")
                         if burn_done >= P.burn_in:
+                            _raw_points_debug.append(p.copy())
                             points.append(p * P.scale)
                             pts_gen += 1
                         else:
@@ -855,6 +860,7 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                     if any(math.isnan(c) or math.isinf(c) for c in p):
                         raise ValueError(f"Numerical instability @ step {i}.")
                     if i >= P.burn_in:
+                        _raw_points_debug.append(p.copy())
                         points.append(p * P.scale)
                     if (i % 200) == 0:
                         wm.progress_update(i - P.burn_in)
@@ -1130,6 +1136,24 @@ class ATTRACTOR_OT_smooth_apply(bpy.types.Operator):
         self.report({'INFO'}, f"Smoothed to {len(control_points)} control points.")
         return {'FINISHED'}
 
+class ATTRACTOR_OT_export_raw(bpy.types.Operator):
+    bl_idname = "attractor.export_raw_points"
+    bl_label = "Export Raw ODE Points"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        if not _raw_points_debug:
+            self.report({'ERROR'}, "No raw ODE points available. Build the attractor first.")
+            return {'CANCELLED'}
+
+        mesh = bpy.data.meshes.new("RawPointsMesh")
+        mesh.from_pydata([tuple(p) for p in _raw_points_debug], [], [])
+        obj = bpy.data.objects.new("RawPoints", mesh)
+        context.scene.collection.objects.link(obj)
+
+        self.report({'INFO'}, f"Exported {len(_raw_points_debug)} raw points.")
+        return {'FINISHED'}
+
 
 # ==========================================================================
 # 10. Blender UI Panels
@@ -1309,6 +1333,8 @@ class ATTRACTOR_PT_panel(bpy.types.Panel):
         split_name.label(text="Output Name:")
         split_name.prop(P, "curve_name", text="")
         build_col.operator("attractor.build_curve", text="Build Attractor", icon='EXPERIMENTAL')
+        build_col.operator("attractor.export_raw_points", text="Export Raw Points", icon='POINTCLOUD_DATA')
+
 
 
 class ATTRACTOR_PT_post_processing(bpy.types.Panel):
@@ -1368,6 +1394,7 @@ classes = (
     ATTRACTOR_OT_copy_to_custom, ATTRACTOR_OT_edit_notes, ATTRACTOR_OT_trim_apply,
     ATTRACTOR_OT_simplify_apply, ATTRACTOR_OT_smooth_apply,
     ATTRACTOR_PT_panel, ATTRACTOR_PT_post_processing,
+    ATTRACTOR_OT_export_raw,
 )
 
 
