@@ -554,6 +554,25 @@ def reset_post_processing_state_update(self, context):
         props.show_post_processing = False
         props.active_curve_name = ""
 
+def integration_method_update(self, context):
+    """
+    Synchronize high-level integration_method with internal
+    integration_approach + method/adaptive_method.
+    """
+    method = self.integration_method
+
+    # Fixed-step methods
+    if method in {'EULER', 'HEUN', 'RK4'}:
+        self.integration_approach = 'FIXED'
+        self.method = method
+    # Adaptive-step methods
+    elif method in {'RKF45', 'DP5'}:
+        self.integration_approach = 'ADAPTIVE'
+        self.adaptive_method = method
+
+    # Zachowaj dotychczasowe zachowanie: zmiana metody resetuje post-processing
+    reset_post_processing_state_update(self, context)
+
 
 def on_custom_equation_change(self, context):
     """Callback when custom equations change to require re-validation."""
@@ -614,12 +633,10 @@ def apply_snapshot_to_props(props, entry):
 
     defaults = entry.get("defaults", {})
     procedure = defaults.get("procedure", "RK4")
-    if procedure in {"RKF45", "DP5"}:
-        props.integration_approach = 'ADAPTIVE'
-        props.adaptive_method = procedure
+    if procedure in {"EULER", "HEUN", "RK4", "RKF45", "DP5"}:
+        props.integration_method = procedure
     else:
-        props.integration_approach = 'FIXED'
-        props.method = procedure
+        props.integration_method = "RK4" 
 
     props.tolerance = float(defaults.get("tolerance", props.tolerance))
     props.min_dt = float(defaults.get("min_dt", props.min_dt))
@@ -711,6 +728,18 @@ class ATTRACTOR_Props(bpy.types.PropertyGroup):
     x0: bpy.props.FloatProperty(name="x0", default=0.01, precision=4, update=reset_post_processing_state_update)
     y0: bpy.props.FloatProperty(name="y0", default=0.01, precision=4, update=reset_post_processing_state_update)
     z0: bpy.props.FloatProperty(name="z0", default=0.01, precision=4, update=reset_post_processing_state_update)
+    integration_method: bpy.props.EnumProperty(
+        name="Method",
+        items=[
+            ("EULER", "Euler", "Explicit Euler, fixed step"),
+            ("HEUN",  "Heun (RK2)", "Heun / RK2, fixed step"),
+            ("RK4",   "RK4", "Runge–Kutta 4, fixed step"),
+            ("RKF45", "RKF45", "Runge–Kutta–Fehlberg 4(5), adaptive step"),
+            ("DP5",   "DP5", "Dormand–Prince 5(4), adaptive step"),
+        ],
+        default="RK4",
+        update=integration_method_update,
+    )    
     integration_approach: bpy.props.EnumProperty(name="Approach", items=[("FIXED", "Fixed", ""), ("ADAPTIVE", "Adaptive", "")], default="FIXED", update=reset_post_processing_state_update)
     method: bpy.props.EnumProperty(name="Procedure", items=[("EULER", "Euler", ""), ("HEUN", "Heun (RK2)", ""), ("RK4", "RK4", "")], default="RK4", update=reset_post_processing_state_update)
     adaptive_method: bpy.props.EnumProperty(name="Procedure", items=[("RKF45", "RKF45", ""), ("DP5", "DP5", "")], default="DP5", update=reset_post_processing_state_update)
@@ -1349,29 +1378,32 @@ class ATTRACTOR_PT_panel(bpy.types.Panel):
         row_init.prop(P, "x0")
         row_init.prop(P, "y0")
         row_init.prop(P, "z0")
-        col.label(text="Simulation Method:")
-        col.row().prop(P, "integration_approach", expand=True)
 
-        if P.integration_approach == 'FIXED':
-            row_method = col.row()
-            split_method = row_method.split(factor=0.4)
-            split_method.label(text="Procedure:")
-            split_method.prop(P, "method", text="")
+        row = col.row(align=True)
+        split = row.split(factor=0.55)
+
+        col_left = split.column()
+        col_right = split.column()
+
+        col_left.label(text="Integration Method:")
+        col_right.prop(P, "integration_method", text="")
+
+        if P.integration_method in {'EULER', 'HEUN', 'RK4'}:
+            col.label(text="Fixed dt:")
             col.prop(P, "dt")
             col.prop(P, "steps")
             col.prop(P, "burn_in")
             col.prop(P, "scale")
-        else: # ADAPTIVE
-            row_adaptive_method = col.row()
-            split_adaptive = row_adaptive_method.split(factor=0.4)
-            split_adaptive.label(text="Procedure:")
-            split_adaptive.prop(P, "adaptive_method", text="")
+        else:
+            col.label(text="Adaptive dt:")
             col.prop(P, "tolerance")
             col.prop(P, "min_dt")
             col.prop(P, "max_dt")
             col.prop(P, "steps")
             col.prop(P, "burn_in")
             col.prop(P, "scale")
+
+
 
         build_box = layout.box()
         build_col = build_box.column(align=True)
