@@ -46,12 +46,11 @@ def _get_user_data_path():
 # 2. Global Caches & State
 # ==========================================================================
 
-# Caches for interactive post-processing to avoid recalculating base data.
 _original_curve_cache = {}
 _simplify_source_cache = {}
 _working_curve_cache = {}
 _smooth_source_cache = {}
-_raw_points_debug = []
+_raw_points = []
 
 
 
@@ -77,7 +76,7 @@ def step_rk4(rhs_func, p: Vector, params: dict, dt: float) -> Vector:
     k2 = rhs_func(p + k1 * (0.5 * dt), params)
     k3 = rhs_func(p + k2 * (0.5 * dt), params)
     k4 = rhs_func(p + k3 * dt, params)
-    return p + (k1 + k2 * 2.0 + k3 * 2.0 + k4) * (dt / 6.0)
+    return p + (dt / 6.0)*(k1 + k2 * 2.0 + k3 * 2.0 + k4)
 
 
 def step_rkf45(rhs_func, p: Vector, params: dict, current_dt: float, tolerance: float):
@@ -827,8 +826,8 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                 rhs_func = build_rhs_function(P.custom_dx, P.custom_dy, P.custom_dz)
 
             p, points, wm = Vector((P.x0, P.y0, P.z0)), [], context.window_manager
-            global _raw_points_debug
-            _raw_points_debug = []
+            global _raw_points
+            _raw_points = [p.copy()]
 
             if P.integration_approach == 'ADAPTIVE':
                 dt, pts_gen, burn_done = P.dt, 0, 0
@@ -842,7 +841,7 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                         if any(math.isnan(c) or math.isinf(c) for c in p):
                             raise ValueError("Numerical instability detected.")
                         if burn_done >= P.burn_in:
-                            _raw_points_debug.append(p.copy())
+                            _raw_points.append(p.copy())
                             points.append(p * P.scale)
                             pts_gen += 1
                         else:
@@ -860,7 +859,7 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                     if any(math.isnan(c) or math.isinf(c) for c in p):
                         raise ValueError(f"Numerical instability @ step {i}.")
                     if i >= P.burn_in:
-                        _raw_points_debug.append(p.copy())
+                        _raw_points.append(p.copy())
                         points.append(p * P.scale)
                     if (i % 200) == 0:
                         wm.progress_update(i - P.burn_in)
@@ -1142,16 +1141,64 @@ class ATTRACTOR_OT_export_raw(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context):
-        if not _raw_points_debug:
+        if not _raw_points:
             self.report({'ERROR'}, "No raw ODE points available. Build the attractor first.")
             return {'CANCELLED'}
 
         mesh = bpy.data.meshes.new("RawPointsMesh")
-        mesh.from_pydata([tuple(p) for p in _raw_points_debug], [], [])
+        mesh.from_pydata([tuple(p) for p in _raw_points], [], [])
         obj = bpy.data.objects.new("RawPoints", mesh)
         context.scene.collection.objects.link(obj)
 
-        self.report({'INFO'}, f"Exported {len(_raw_points_debug)} raw points.")
+        self.report({'INFO'}, f"Exported {len(_raw_points)} raw points.")
+        return {'FINISHED'}
+
+class ATTRACTOR_OT_export_raw_csv(bpy.types.Operator):
+    bl_idname = "attractor.export_raw_csv"
+    bl_label = "Export Raw ODE Points CSV"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    filepath: bpy.props.StringProperty(
+        name="File Path",
+        description="File path for exporting raw ODE points as CSV",
+        subtype='FILE_PATH',
+        default="",
+    )
+
+    def invoke(self, context, event):
+        if not _raw_points:
+            self.report({'ERROR'}, "No raw ODE points available. Build the attractor first.")
+            return {'CANCELLED'}
+
+        if not self.filepath:
+            # domyślna nazwa w katalogu blend-a
+            self.filepath = bpy.path.abspath("//attractor_raw_points.csv")
+
+        context.window_manager.fileselect_add(self)
+        return {'RUNNING_MODAL'}
+
+    def execute(self, context):
+        if not _raw_points:
+            self.report({'ERROR'}, "No raw ODE points available. Build the attractor first.")
+            return {'CANCELLED'}
+
+        if not self.filepath:
+            self.report({'ERROR'}, "No filepath specified for CSV export.")
+            return {'CANCELLED'}
+
+        abs_path = bpy.path.abspath(self.filepath)
+
+        try:
+            with open(abs_path, "w", encoding="utf-8", newline="") as f:
+                # nagłówek: indeks kroku + współrzędne
+                f.write("steps,x,y,z\n")
+                for i, p in enumerate(_raw_points):
+                    f.write(f"{i},{p.x:.10g},{p.y:.10g},{p.z:.10g}\n")
+        except OSError as e:
+            self.report({'ERROR'}, f"Failed to write CSV: {e}")
+            return {'CANCELLED'}
+
+        self.report({'INFO'}, f"Exported {len(_raw_points)} raw points to CSV.")
         return {'FINISHED'}
 
 
@@ -1332,8 +1379,16 @@ class ATTRACTOR_PT_panel(bpy.types.Panel):
         split_name = row_name.split(factor=0.4)
         split_name.label(text="Output Name:")
         split_name.prop(P, "curve_name", text="")
+
         build_col.operator("attractor.build_curve", text="Build Attractor", icon='EXPERIMENTAL')
-        build_col.operator("attractor.export_raw_points", text="Export Raw Points", icon='POINTCLOUD_DATA')
+
+        build_col.separator()
+        build_col.label(text="Raw data:")
+
+        raw_row = build_col.row(align=True)
+        raw_row.operator("attractor.export_raw_points", text="Points", icon='POINTCLOUD_DATA')
+        raw_row.operator("attractor.export_raw_csv", text="Export", icon='EXPORT')
+
 
 
 
@@ -1394,7 +1449,7 @@ classes = (
     ATTRACTOR_OT_copy_to_custom, ATTRACTOR_OT_edit_notes, ATTRACTOR_OT_trim_apply,
     ATTRACTOR_OT_simplify_apply, ATTRACTOR_OT_smooth_apply,
     ATTRACTOR_PT_panel, ATTRACTOR_PT_post_processing,
-    ATTRACTOR_OT_export_raw,
+    ATTRACTOR_OT_export_raw, ATTRACTOR_OT_export_raw_csv,
 )
 
 
