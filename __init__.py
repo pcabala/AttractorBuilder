@@ -51,7 +51,7 @@ _simplify_source_cache = {}
 _working_curve_cache = {}
 _smooth_source_cache = {}
 _raw_points = []
-
+_raw_dts = []
 
 
 # ==========================================================================
@@ -855,8 +855,9 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                 rhs_func = build_rhs_function(P.custom_dx, P.custom_dy, P.custom_dz)
 
             p, points, wm = Vector((P.x0, P.y0, P.z0)), [], context.window_manager
-            global _raw_points
+            global _raw_points, _raw_dts
             _raw_points = [p.copy()]
+            _raw_dts = [0.0]
 
             if P.integration_approach == 'ADAPTIVE':
                 dt, pts_gen, burn_done = P.dt, 0, 0
@@ -871,6 +872,7 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                             raise ValueError("Numerical instability detected.")
                         if burn_done >= P.burn_in:
                             _raw_points.append(p.copy())
+                            _raw_dts.append(dt)
                             points.append(p * P.scale)
                             pts_gen += 1
                         else:
@@ -889,6 +891,7 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
                         raise ValueError(f"Numerical instability @ step {i}.")
                     if i >= P.burn_in:
                         _raw_points.append(p.copy())
+                        _raw_dts.append(P.dt)
                         points.append(p * P.scale)
                     if (i % 200) == 0:
                         wm.progress_update(i - P.burn_in)
@@ -1219,10 +1222,10 @@ class ATTRACTOR_OT_export_raw_csv(bpy.types.Operator):
 
         try:
             with open(abs_path, "w", encoding="utf-8", newline="") as f:
-                # nagłówek: indeks kroku + współrzędne
-                f.write("steps,x,y,z\n")
+                f.write("steps,dt,x,y,z\n")
                 for i, p in enumerate(_raw_points):
-                    f.write(f"{i},{p.x:.10g},{p.y:.10g},{p.z:.10g}\n")
+                    dt = _raw_dts[i] if i < len(_raw_dts) else 0.0
+                    f.write(f"{i},{dt:.10g},{p.x:.10g},{p.y:.10g},{p.z:.10g}\n")
         except OSError as e:
             self.report({'ERROR'}, f"Failed to write CSV: {e}")
             return {'CANCELLED'}
