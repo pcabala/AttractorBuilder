@@ -713,9 +713,9 @@ class ATTRACTOR_Props(bpy.types.PropertyGroup):
     attractor_type: bpy.props.EnumProperty(items=lambda s, c: lib_manager.get_default_enum_items(), update=update_attractor_defaults)
     custom_selected: bpy.props.EnumProperty(items=lambda s, c: lib_manager.get_custom_enum_items(), update=_on_custom_select)
     custom_name: bpy.props.StringProperty(name="Name", default="My Attractor")
-    custom_dx: bpy.props.StringProperty(name="dx/dt", default="y", update=on_custom_equation_change)
-    custom_dy: bpy.props.StringProperty(name="dy/dt", default="-x", update=on_custom_equation_change)
-    custom_dz: bpy.props.StringProperty(name="dz/dt", default="0", update=on_custom_equation_change)
+    custom_dx: bpy.props.StringProperty(name="ẋ", default="y", update=on_custom_equation_change)
+    custom_dy: bpy.props.StringProperty(name="ẏ", default="-x", update=on_custom_equation_change)
+    custom_dz: bpy.props.StringProperty(name="ż", default="0", update=on_custom_equation_change)
     custom_params: bpy.props.CollectionProperty(type=ATTRACTOR_CustomParam)
     custom_validate_state: bpy.props.EnumProperty(items=[("NONE", "None", ""), ("OK", "OK", ""), ("ERROR", "Error", "")])
     custom_validate_msg: bpy.props.StringProperty()
@@ -800,13 +800,17 @@ class ATTRACTOR_Props(bpy.types.PropertyGroup):
             _simplify_source_cache[name] = src
 
         baseline = len(_simplify_source_cache[name])
-        keep_ratio = 1.0 - (float(self.simplify_percent) / 100.0)
+        keep_ratio = float(self.simplify_percent) / 100.0
         target = max(2, int(round(baseline * keep_ratio)))
 
         if int(self.simplify_target) != target:
             self.simplify_target = target
 
-    simplify_percent: bpy.props.FloatProperty(name="Simplify (%)", default=0.0, min=0.0, max=100.0, subtype='PERCENTAGE', update=update_simplify_percent)
+    simplify_percent: bpy.props.FloatProperty(
+        name="Fidelity (%)",
+        default=100.0, min=0.0, max=100.0,
+        subtype='PERCENTAGE', update=update_simplify_percent)
+
 
 
 # ==========================================================================
@@ -915,7 +919,7 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
             _original_curve_cache[obj.name] = [p.copy() for p in points]
 
             P.trim_start, P.trim_end = 0.0, 100.0
-            P.simplify_percent = 0.0
+            P.simplify_percent = 100.0
             P.simplify_target = len(points)
             P.active_curve = obj
             P.active_curve_name = obj.name
@@ -1081,7 +1085,7 @@ class ATTRACTOR_OT_trim_apply(bpy.types.Operator):
         _simplify_source_cache.pop(obj.name, None)
         _working_curve_cache.pop(obj.name, None)
 
-        P.simplify_target, P.simplify_percent = len(pts), 0.0
+        P.simplify_target, P.simplify_percent = len(pts), 100.0
         P.trim_start, P.trim_end = 0.0, 100.0
         update_interactive_trim(P, context)
         self.report({'INFO'}, f"Trim applied. '{obj.name}' is now the new base.")
@@ -1161,7 +1165,7 @@ class ATTRACTOR_OT_smooth_apply(bpy.types.Operator):
             cache.pop(obj.name, None)
 
         P.simplify_suspend = True
-        P.simplify_target, P.simplify_percent = len(new_base_pts), 0.0
+        P.simplify_target, P.simplify_percent = len(new_base_pts), 100.0
         P.simplify_suspend = False
 
         self.report({'INFO'}, f"Smoothed to {len(control_points)} control points.")
@@ -1297,9 +1301,9 @@ class ATTRACTOR_PT_panel(bpy.types.Panel):
                 col.label(text="Equations:", icon='FUND')
                 rhs = entry.get("rhs", {})
                 col.scale_y = 0.8
-                col.label(text=f"dx/dt = {rhs.get('dx', '...')}")
-                col.label(text=f"dy/dt = {rhs.get('dy', '...')}")
-                col.label(text=f"dz/dt = {rhs.get('dz', '...')}")
+                col.label(text=f"ẋ = {rhs.get('dx', '...')}")
+                col.label(text=f"ẏ = {rhs.get('dy', '...')}")
+                col.label(text=f"ż = {rhs.get('dz', '...')}")
                 if P.custom_params:
                     col.separator()
                     col.scale_y = 1.0
@@ -1320,16 +1324,32 @@ class ATTRACTOR_PT_panel(bpy.types.Panel):
                         row.scale_y = 0.8
                         row.label(text=line)
 
-        else: # CUSTOM
+        else:  # CUSTOM
             box = layout.box()
             box.label(text="Custom Library", icon='USER')
             box.prop(P, "custom_selected", text="")
 
             col = box.column(align=True)
             col.label(text="Equations:", icon='FUND')
-            col.prop(P, "custom_dx")
-            col.prop(P, "custom_dy")
-            col.prop(P, "custom_dz")
+
+            # ẋ
+            row = col.row(align=True)
+            split = row.split(factor=0.1, align=True)
+            split.label(text="ẋ =")
+            split.prop(P, "custom_dx", text="")
+
+            # ẏ
+            row = col.row(align=True)
+            split = row.split(factor=0.1, align=True)
+            split.label(text="ẏ =")
+            split.prop(P, "custom_dy", text="")
+
+            # ż
+            row = col.row(align=True)
+            split = row.split(factor=0.1, align=True)
+            split.label(text="ż =")
+            split.prop(P, "custom_dz", text="")
+
 
             box.operator("attractor.custom_validate", text="Detect Parameters")
 
@@ -1464,10 +1484,12 @@ class ATTRACTOR_PT_post_processing(bpy.types.Panel):
         col.label(text="Simplify", icon='MOD_DECIM')
         name = P.active_curve.name if P.active_curve else P.active_curve_name
         baseline = len(_simplify_source_cache.get(name, [])) if name else 0
-        est_pts = max(2, int(baseline * (1.0 - P.simplify_percent / 100.0))) if baseline > 0 else int(P.simplify_target)
-        col.prop(P, "simplify_percent", text=f"Points: {est_pts:,}", slider=True)
+        keep_ratio = float(P.simplify_percent) / 100.0
+        est_pts = max(2, int(baseline * keep_ratio)) if baseline > 0 else int(P.simplify_target)
+        col.prop(P, "simplify_percent",
+                 text=f"Points: {est_pts:,}", slider=True)
         col.operator("attractor.simplify_apply")
-        col.separator()
+
 
         col.label(text="Smooth to Bezier", icon='IPO_SINE')
         col.prop(P, "smooth_fidelity", slider=True)
