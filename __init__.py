@@ -1175,6 +1175,7 @@ class ATTRACTOR_OT_export_raw(bpy.types.Operator):
     bl_idname = "attractor.export_raw_points"
     bl_label = "Export Raw ODE Points"
     bl_options = {'REGISTER', 'UNDO'}
+    bl_description = ("Create a 'RawPoints' mesh object in the scene (unscaled)")
 
     def execute(self, context):
         if not _raw_points:
@@ -1193,7 +1194,8 @@ class ATTRACTOR_OT_export_raw_csv(bpy.types.Operator):
     bl_idname = "attractor.export_raw_csv"
     bl_label = "Export Raw ODE Points CSV"
     bl_options = {'REGISTER', 'UNDO'}
-
+    bl_description = ("Save the raw ODE trajectory to CSV (step, dt, x, y, z).")    
+    
     filepath: bpy.props.StringProperty(
         name="File Path",
         description="File path for exporting raw ODE points as CSV",

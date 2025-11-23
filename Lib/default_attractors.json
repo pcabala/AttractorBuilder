@@ -1,430 +1,549 @@
 {
   "schema": 1,
   "items": {
-    "Lorenz": {
+    "Arneodo": {
       "rhs": {
-        "dx": "a * (y - x)",
-        "dy": "x * (b - z) - y",
-        "dz": "x * y - c * z"
+        "dx": "a * (x - y)",
+        "dy": "-4*a*y + x*z + m*x**3",
+        "dz": "-d*a*z + x*y + b*z**2"
       },
-      "params": {"a": 10.0, "b": 28.0, "c": 2.667},
-      "initial": [0.01, 0.01, 0.01],
+      "params": {
+        "a": 1.0,
+        "b": -0.09,
+        "d": 1.5,
+        "m": 0.01
+      },
+      "initial": [1.0, 0.1, 0.1],
       "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 10000, "burn_in": 500, "scale": 0.1
+        "procedure": "EULER",
+        "dt": 0.01,
+        "tolerance": 1e-4,
+        "min_dt": 1e-6,
+        "max_dt": 0.1,
+        "steps": 15000,
+        "burn_in": 1000,
+        "scale": 0.1
       },
-      "summary": "The classic double-scroll 'butterfly' attractor.",
-      "source": "E. N. Lorenz (1963), 'Deterministic Nonperiodic Flow'.",
-      "details": "Experiment by lowering 'b' (Rayleigh number ρ) towards 24 to see periodic spirals. Tweaking 'a' (Prandtl number σ) from 8-16 changes the tightness of the wings, and adjusting 'c' (related to geometry β) from 2-3 alters vertical damping."
+      "summary": "A symmetric chaotic attractor introduced by Arneodo, Coullet and Tresser.",
+      "source": "A. Arneodo, P. Coullet & C. Tresser (1981), 'A possible new mechanism for the onset of turbulence', Physics Letters A 81(4), 197–201.",
+      "details": "Parameter 'm' controls the strength of the cubic term and the complexity of the lobes (larger |m| gives more twisted shapes). 'b' affects stretching and thickness along the z-direction. 'a' rescales the overall time scale (larger 'a' may require smaller 'dt' for stability). 'd' controls damping in z; increasing 'd' compresses the attractor along the z-axis."
     },
-    "Rössler": {
-      "rhs": {
-        "dx": "-y - z",
-        "dy": "x + a * y",
-        "dz": "b + z * (x - c)"
-      },
-      "params": {"a": 0.2, "b": 0.2, "c": 5.7},
-      "initial": [0.01, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 60000, "burn_in": 1000, "scale": 0.2
-      },
-      "summary": "A chaotic attractor organized in a simple, elegant spiral band.",
-      "source": "O. E. Rössler (1976), 'An equation for continuous chaos'.",
-      "details": "Experiment by lowering 'c' (~3–4) to obtain periodic spirals, or increasing 'c' (~6–10) to expand the band and enhance chaos. Modest changes to 'a' and 'b' can also alter the band's thickness and folding."
-    },
-    "Chen": {
-      "rhs": {
-        "dx": "a * (y - x)",
-        "dy": "(c - a) * x - x * z + c * y",
-        "dz": "x * y - b * z"
-      },
-      "params": {"a": 35.0, "b": 3.0, "c": 28.0},
-      "initial": [0.0, 1.0, 1.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.005, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 80000, "burn_in": 1000, "scale": 0.1
-      },
-      "summary": "A complex, dual-scroll attractor similar but topologically distinct from Lorenz.",
-      "source": "G. Chen & T. Ueta (1999), 'Yet another chaotic attractor'.",
-      "details": "Experiment by lowering 'c' (~18–22) to move toward periodic motion, or raising 'a' (~30–45) to broaden the scrolls. Pushing 'c' much above ~30 can cause the simulation to diverge."
-    },
-    "Lü": {
-      "rhs": {
-        "dx": "a * (y - x)",
-        "dy": "c * y - x * z",
-        "dz": "x * y - b * z"
-      },
-      "params": {"a": 36.0, "b": 3.0, "c": 20.0},
-      "initial": [0.1, 0.1, 0.1],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.005, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 50000, "burn_in": 300, "scale": 0.1
-      },
-      "summary": "A system that bridges the gap between the Lorenz and Chen attractors.",
-      "source": "J. Lü & G. Chen (2002), 'A new chaotic attractor bridging the gap...'.",
-      "details": "Experiment by lowering 'c' (toward ~15) to move toward less chaotic motion, or raising 'a' (~28–45) to widen the twin scrolls. Pushing 'c' far above ~20 can cause the simulation to diverge."
-    },
-    "Langford": {
-      "rhs": {
-        "dx": "(z - b) * x - d * y",
-        "dy": "d * x + (z - b) * y",
-        "dz": "c + a * z - (z**3) / 3 - (x**2 + y**2) * (1 + e * z)"
-      },
-      "params": {"a": 0.95, "b": 0.7, "c": 0.6, "d": 3.5, "e": 0.25},
-      "initial": [0.1, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.015, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 15000, "burn_in": 2000, "scale": 0.9
-      },
-      "summary": "A complex attractor that can form a spherical or toroidal shell.",
-      "source": "Langford, W. F. (1984). <i>Numerical studies of torus bifurcations. Physica D: Nonlinear Phenomena, 10(1–2), 135–156",
-      "details": "Experiment by lowering 'a' (~0.8) for quasi-periodic tori, or raising 'd' (~4.0) and 'e' (~0.3) to thicken the band. Increasing 'b' toward ~0.9 tends to damp the motion toward the center."
-    },
-    "Thomas": {
-      "rhs": {
-        "dx": "sin(y) - a * x",
-        "dy": "sin(z) - a * y",
-        "dz": "sin(x) - a * z"
-      },
-      "params": {"a": 0.208186},
-      "initial": [0.02, 0.01, 0.03],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.03, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 10000, "burn_in": 500, "scale": 0.7
-      },
-      "summary": "A smooth, cyclically symmetric attractor with a fuzzy, looping structure.",
-      "source": "R. Thomas (1999), 'Deterministic chaos seen in terms of feedback circuits'.",
-      "details": "A typical chaotic behavior occurs near a ≈ 0.208. Experiment with different values to explore transitions between quasi-periodic motion (a ≈ 0.18–0.25) and periodic behavior (a ≥ 0.3)."
-    },
-    "Halvorsen": {
-      "rhs": {
-        "dx": "-a * x - 4 * y - 4 * z - y**2",
-        "dy": "-a * y - 4 * z - 4 * x - z**2",
-        "dz": "-a * z - 4 * x - 4 * y - x**2"
-      },
-      "params": {"a": 1.4},
-      "initial": [0.01, 0.0, 0.01],
-      "defaults": {
-        "procedure": "DP5",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 20000, "burn_in": 300, "scale": 0.4
-      },
-      "summary": "A cyclically symmetric attractor with a distinctive, curled 'pretzel' shape.",
-      "source": "Arneodo, Coullet & Tresser (1981), often called the Halvorsen attractor.",
-      "details": "Experiment by lowering 'a' toward ~1.1 for periodic motion (wings collapse), or using ~1.2 for a weakly chaotic regime. Increasing 'a' beyond ~1.6 produces strong damping and eventual decay."
-    },
-    "Dadras": {
-      "rhs": {
-        "dx": "y - a * x + b * y * z",
-        "dy": "c * y - x * z + z",
-        "dz": "d * x * y - e * z"
-      },
-      "params": {"a": 3.0, "b": 2.7, "c": 1.7, "d": 2.0, "e": 9.0},
-      "initial": [0.01, 0.01, 0.01],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 10000, "burn_in": 2000, "scale": 0.1
-      },
-      "summary": "An elegant, multi-scroll system that forms delicate, butterfly-like wings.",
-      "source": "S. Dadras & H. R. Momeni (2009), 'A novel three-dimensional autonomous chaotic system...'.",
-      "details": "Experiment by lowering 'e' (~4–6) to move toward periodic motion, or raising 'e' (~10–11) to expand the scrolls. Modest tweaks to 'b' (~2.3–3.0) also reshape the wings."
-    },
-    "Sprott B": {
-      "rhs": {
-        "dx": "a * y * z",
-        "dy": "x - b * y",
-        "dz": "c - x * y"
-      },
-      "params": {"a": 0.4, "b": 1.2, "c": 1.0},
-      "initial": [0.01, 0.01, 0.01],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.03, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 10000, "burn_in": 500, "scale": 0.2
-      },
-      "summary": "A compact, dense attractor from a survey of simple chaotic flows.",
-      "source": "J. C. Sprott (1994), 'Some simple chaotic flows'.",
-      "details": "Experiment by raising 'a' (~0.5) to broaden the wings, lowering 'b' (~0.8–1.0) to move toward periodic motion, or increasing 'b' (~1.5–2.0) to damp the dynamics. Tweaking 'c' around ~1 shifts the balance of the lobes."
-    },
-	"Arneodo": {
-      "rhs": {
-        "dx": "y",
-        "dy": "z",
-        "dz": "-a*x - b*y - z + c*x**3"
-      },
-      "params": {"a": -5.5, "b": 3.5, "c": -1.0},
-      "initial": [0.1, 0.0, 0.0],
-      "defaults": {
-        "procedure": "DP5",
-        "dt": 0.009, "tolerance": 1e-5, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 1000, "scale": 0.2
-      },
-      "summary": "A complex, folded attractor known for its intricate layering.",
-      "source": "A. Arneodo, P. Coullet & C. Tresser (1981), 'A possible new mechanism for the onset of turbulence'.",
-      "details": "This system is highly sensitive to its parameters. Slight adjustments to 'a' and 'b' can shift the system between chaotic and periodic states. Parameter 'c' controls the strength of the non-linear folding."
-    },
-    "Burke-Shaw": {
+
+    "Burke–Shaw": {
       "rhs": {
         "dx": "-a * (x + y)",
         "dy": "-y - a * x * z",
         "dz": "a * x * y + b"
       },
-      "params": {"a": 10.0, "b": 4.272},
-      "initial": [1.0, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.005, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 20000, "burn_in": 500, "scale": 0.5
+      "params": {
+        "a": 10.0,
+        "b": 13.0
       },
-      "summary": "An unusual attractor that produces a strange, shuttlecock-like shape.",
-      "source": "B. Burke & R. Shaw (1981), from early explorations into strange attractors.",
-      "details": "The system is chaotic for the default parameter 'b' (originally v). Experiment by lowering 'b' towards 4.0 to observe transitions into simpler, periodic orbits."
-    },
-    "Shimizu-Morioka": {
-      "rhs": {
-        "dx": "y",
-        "dy": "(1 - z) * x - a * y",
-        "dz": "x**2 - b * z"
-      },
-      "params": {"a": 0.75, "b": 0.45},
       "initial": [0.1, 0.0, 0.0],
       "defaults": {
         "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 1000, "scale": 1.0
+        "dt": 0.01,
+        "tolerance": 1e-4,
+        "min_dt": 1e-6,
+        "max_dt": 0.1,
+        "steps": 15000,
+        "burn_in": 500,
+        "scale": 0.3
       },
-      "summary": "A system closely related to the Lorenz model, forming two distinct scrolls.",
-      "source": "T. Shimizu & N. Morioka (1980), 'On the bifurcation of a symmetric limit cycle...'.",
-      "details": "The parameter 'a' controls the shape and stability of the scrolls. Try values between 0.6 and 0.8. The parameter 'b' influences the vertical separation."
+      "summary": "A classical unbounded chaotic attractor with nonlinear coupling in x–y and a constant drift along the z-axis.",
+      "source": "R. Shaw (1981), 'Strange Attractors, Chaotic Behavior and Information Flow', Z. Naturforsch. A 36, 80–112.",
+      "details": "Parameter 'a' increases the strength of nonlinear coupling between x and y; larger values create stronger stretching and folding. 'b' shifts the z-direction and controls the amount of vertical drift — higher 'b' stretches trajectories upward."
     },
-    "Rikitake": {
-      "rhs": {
-        "dx": "-b*x + z*y",
-        "dy": "-b*y + (z-a)*x",
-        "dz": "1 - x*y"
-      },
-      "params": {"a": 5.0, "b": 2.0},
-      "initial": [1.0, 1.0, 1.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 15000, "burn_in": 500, "scale": 0.5
-      },
-      "summary": "A model of Earth's geomagnetic field reversals with two unstable focal points.",
-      "source": "T. Rikitake (1958), used to model dynamo theory.",
-      "details": "This system models the chaotic switching between two states. The parameter 'b' controls the damping, while 'a' influences the asymmetry of the system."
-    },
-    "Rabinovich-Fabrikant": {
-      "rhs": {
-        "dx": "y * (z - 1 + x**2) + b * x",
-        "dy": "x * (3 * z + 1 - x**2) + b * y",
-        "dz": "-2 * z * (a + x * y)"
-      },
-      "params": {"a": 1.1, "b": 0.87},
-      "initial": [-1.0, 0.0, 0.5],
-      "defaults": {
-        "procedure": "DP5",
-        "dt": 0.005, "tolerance": 5e-5, "min_dt": 1e-6, "max_dt": 0.05,
-        "steps": 40000, "burn_in": 2000, "scale": 0.5
-      },
-      "summary": "A complex system producing beautiful, multi-layered chaotic patterns.",
-      "source": "M.I. Rabinovich & A.L. Fabrikant (1979), 'Stochastic self-modulation of waves...'.",
-      "details": "This attractor is famous for its intricate structure. Due to its sharp turns, an Adaptive integration approach is highly recommended. Lowering 'b' towards 0.8 can simplify the structure."
-    },
-    "Nose-Hoover": {
-      "rhs": {
-        "dx": "y",
-        "dy": "-x + y*z",
-        "dz": "a - y**2"
-      },
-      "params": {"a": 1.5},
-      "initial": [1.0, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 40000, "burn_in": 500, "scale": 0.8
-      },
-      "summary": "An elegant, pretzel-like attractor from the field of computational physics.",
-      "source": "S. Nosé (1984) & W. G. Hoover (1985), developed for molecular dynamics simulations.",
-      "details": "The parameter 'a' controls the shape and complexity. The default value of 1.5 is chaotic. Try lowering 'a' towards 1.0 to see the shape simplify into a stable orbit."
-    },
-    "Newton-Leipnik": {
-      "rhs": {
-        "dx": "-a*x + y + 10*y*z",
-        "dy": "-x - 0.4*y + 5*x*z",
-        "dz": "b*z - 5*x*y"
-      },
-      "params": {"a": 0.4, "b": 0.175},
-      "initial": [0.35, 0.0, -0.16],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.03, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 20000, "burn_in": 1000, "scale": 1.5
-      },
-      "summary": "A visually complex attractor, also known as the 'magnificent octopus'.",
-      "source": "Popularized by R.J. Leipnik & T.A. Newton (1981).",
-      "details": "This system is known for its rich, layered structure. The default parameters are finely tuned for chaos. Small changes can drastically alter the output."
-    },
-    "Lotka-Volterra": {
-      "rhs": {
-        "dx": "x - x*y + c*x**2 - a*z*x**2",
-        "dy": "-y + x*y",
-        "dz": "-b*z + a*z*x**2"
-      },
-      "params": {"a": 2.9851, "b": 3.0, "c": 2.0},
-      "initial": [1.0, 1.0, 1.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 1000, "scale": 1.0
-      },
-      "summary": "A 3D chaotic generalization of the classic predator-prey model.",
-      "source": "J. S. Costello (1999), based on the work of Lotka and Volterra.",
-      "details": "This system models a complex food chain. The parameters 'a', 'b', and 'c' control the interaction rates and can be tweaked to explore different dynamic behaviors."
-    },
-    "Hadley": {
-      "rhs": {
-        "dx": "-y**2 - z**2 - a*x + a*b",
-        "dy": "x*y - c*x*z - y + d",
-        "dz": "c*x*y + x*z - z"
-      },
-      "params": {"a": 0.2, "b": 8.0, "c": 4.0, "d": 1.0},
-      "initial": [0.0, 0.0, 1.3],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.008, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 1000, "scale": 0.3
-      },
-      "summary": "A complex system related to fluid dynamics and atmospheric circulation.",
-      "source": "D. J. Hadley, from models of atmospheric convection.",
-      "details": "Parameters control physical aspects of the fluid model. 'a' is related to Prandtl number, 'b' (originally f) and 'd' (originally g) relate to heating. Small changes to 'b' can have a large effect."
-    },
-    "Dequan-Li": {
-      "rhs": {
-        "dx": "a*(y - x) + c*x*z",
-        "dy": "f*x + e*y - x*z",
-        "dz": "b*z + x*y - d*x**2"
-      },
-      "params": {"a": 40.0, "b": 1.833, "c": 0.16, "d": 0.65, "e": 20.0, "f": 55.0},
-      "initial": [0.01, 0.0, 0.0],
-      "defaults": {
-        "procedure": "DP5",
-        "dt": 0.001, "tolerance": 1e-5, "min_dt": 1e-7, "max_dt": 0.01,
-        "steps": 30000, "burn_in": 1000, "scale": 0.05
-      },
-      "summary": "A four-winged hyperchaotic attractor with a butterfly-like structure.",
-      "source": "D. Li (2008), 'A new four-wing hyperchaotic system...'.",
-      "details": "This system is hyperchaotic, meaning it has multiple positive Lyapunov exponents. An Adaptive approach is recommended due to its complexity. The many parameters allow for a wide range of behaviors."
-    },
-    "Sprott D": {
-      "rhs": {
-        "dx": "-y",
-        "dy": "x + z",
-        "dz": "x*z + a*y**2"
-      },
-      "params": {"a": 3.0},
-      "initial": [0.1, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 500, "scale": 0.5
-      },
-      "summary": "A simple chaotic flow producing a dense, somewhat spherical shape.",
-      "source": "J. C. Sprott (1994), 'Some simple chaotic flows'.",
-      "details": "Part of a famous survey of algebraically simple chaotic systems. Experiment by varying 'a' between 2.0 and 4.0 to see changes in the structure."
-    },
-    "Sprott E": {
-      "rhs": {
-        "dx": "y*z",
-        "dy": "x**2 - y",
-        "dz": "1 - a*x"
-      },
-      "params": {"a": 4.0},
-      "initial": [1.0, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 20000, "burn_in": 500, "scale": 0.5
-      },
-      "summary": "A simple chaotic flow with a distinctive V-shape.",
-      "source": "J. C. Sprott (1994), 'Some simple chaotic flows'.",
-      "details": "Another case from Sprott's survey. The chaos is robust for values of 'a' around 4.0. Lowering 'a' towards 3.5 can lead to periodic behavior."
-    },
-	"Sprott N": {
-      "rhs": {
-        "dx": "-a*y",
-        "dy": "x + z**2",
-        "dz": "1 + y - a*z"
-      },
-      "params": {"a": 2.0},
-      "initial": [0.1, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 500, "scale": 0.4
-      },
-      "summary": "A simple chaotic flow with a distinctive folded, layered structure.",
-      "source": "J. C. Sprott (1994), 'Some simple chaotic flows'.",
-      "details": "Another case from Sprott's survey of simple chaotic systems. The parameter 'a' can be adjusted to slightly alter the thickness and folding of the attractor."
-    },
-    "Sprott R": {
-      "rhs": {
-        "dx": "a - y",
-        "dy": "b + z",
-        "dz": "x*y - z"
-      },
-      "params": {"a": 0.9, "b": 0.4},
-      "initial": [0.1, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 500, "scale": 1.5
-      },
-      "summary": "A simple chaotic system that produces a wispy, contained shape.",
-      "source": "J. C. Sprott (1994), 'Some simple chaotic flows'.",
-      "details": "The parameters 'a' and 'b' act as constant inputs to the system. Small adjustments to these values can significantly change the attractor's shape and complexity."
-    },
-    "Sprott-Linz F": {
-      "rhs": {
-        "dx": "y + z",
-        "dy": "-x + a*y",
-        "dz": "x**2 - z"
-      },
-      "params": {"a": 0.5},
-      "initial": [0.1, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 500, "scale": 0.8
-      },
-      "summary": "A chaotic flow with a simple, elegant looping structure.",
-      "source": "S. J. Linz & J. C. Sprott (1999), 'Algebraically simple chaotic flows'.",
-      "details": "This is one of the simplest known chaotic systems with a single quadratic nonlinearity. Adjusting 'a' controls the damping of the y-component."
-    },
-    "Sprott-Linz K": {
-      "rhs": {
-        "dx": "x*y - z",
-        "dy": "x - y",
-        "dz": "x + a*z"
-      },
-      "params": {"a": 0.3},
-      "initial": [0.1, 0.0, 0.0],
-      "defaults": {
-        "procedure": "RK4",
-        "dt": 0.01, "tolerance": 1e-4, "min_dt": 1e-6, "max_dt": 0.1,
-        "steps": 30000, "burn_in": 500, "scale": 0.8
-      },
-      "summary": "A dense, leaf-like chaotic attractor.",
-      "source": "S. J. Linz & J. C. Sprott (1999), 'Algebraically simple chaotic flows'.",
-      "details": "The parameter 'a' controls the stability of the z-axis. The system exhibits robust chaos for values of 'a' around 0.3."
-    }
+	
+	"Chen": {
+	  "rhs": {
+		"dx": "a * (y - x)",
+		"dy": "(c - a) * x - x * z + c * y",
+		"dz": "x * y - b * z"
+	  },
+	  "params": {
+		"a": 35.0,
+		"b": 3.0,
+		"c": 28.0
+	  },
+	  "initial": [0.0, 1.0, 1.0],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.005,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 20000,
+		"burn_in": 1000,
+		"scale": 0.1
+	  },
+	  "summary": "A double-scroll chaotic system introduced by Chen and Ueta, similar in form to the Lorenz system but dynamically inequivalent.",
+	  "source": "G. Chen & T. Ueta (1999), 'Yet Another Chaotic Attractor', Int. J. Bifurcation and Chaos 9(7), 1465–1466.",
+	  "details": "Parameter 'a' controls coupling between x and y; larger 'a' strengthens the scroll stretching. 'b' sets dissipation along z; higher 'b' compresses trajectories vertically. 'c' influences amplification through both linear (c*y) and nonlinear (c-a) terms, shaping the width of the scrolls."
+	},
+
+	"Chua": {
+	  "rhs": {
+		"dx": "k*p*(y - x - (b*x + 0.5*(a - b)*(fabs(x + 1) - fabs(x - 1))))",
+		"dy": "k*(x - y + z)",
+		"dz": "k*(-q*y - r*z)"
+	  },
+	  "params": {
+		"a": 0.1,
+		"b": -0.48,
+		"k": 1.0,
+		"p": -1.3,
+		"q": -0.0136,
+		"r": -0.0297
+	  },
+	  "initial": [0.1, 0.0, 0.0],
+	  "defaults": {
+		"procedure": "DP5",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 0.0001,
+		"max_dt": 0.1,
+		"steps": 20000,
+		"burn_in": 500,
+		"scale": 0.7
+	  },
+	  "summary": "A classical chaotic system arising from Chua’s electronic circuit, featuring a piecewise-linear nonlinearity.",
+	  "source": "Matsumoto (1984); Chua (1983, 1995) — foundational works on the Chua circuit and its chaotic dynamics.",
+	  "details": "Parameter 'p' controls the slope of the nonlinear Chua diode, strongly affecting the shape of the double scroll. 'a' and 'b' define the inner and outer slopes of the piecewise-linear function. 'k' rescales overall system speed; lowering 'k' may require decreasing dt. Parameters 'q' and 'r' influence dissipation in the y- and z-directions, modifying scroll width and vertical elongation."
+	},
+
+	"Dadras": {
+	  "rhs": {
+		"dx": "y - a * x + b * y * z",
+		"dy": "c * y - x * z + z",
+		"dz": "d * x * y - h * z"
+	  },
+	  "params": {
+		"a": 3.0,
+		"b": 2.7,
+		"c": 1.7,
+		"d": 2.0,
+		"h": 9.0
+	  },
+	  "initial": [0.01, 0.01, 0.01],
+	  "defaults": {
+		"procedure": "DP5",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 0.000001,
+		"max_dt": 0.1,
+		"steps": 10000,
+		"burn_in": 2000,
+		"scale": 0.2
+	  },
+	  "summary": "A five-parameter chaotic system capable of generating two-, three- and four-scroll attractors depending on parameter selection.",
+	  "source": "S. Dadras & H. R. Momeni (2009), Physics Letters A 373, 3637–3642.",
+	  "details": "Parameter 'a' introduces linear damping in x; 'b' controls the nonlinear yz-term responsible for scroll formation; 'c' sets linear growth in y; 'd' governs xy-coupling in z; 'h' determines linear damping in z and influences scroll height."
+	},
+
+	"Halvorsen": {
+	  "rhs": {
+		"dx": "-a*x - 4*y - 4*z - y**2",
+		"dy": "-a*y - 4*z - 4*x - z**2",
+		"dz": "-a*z - 4*x - 4*y - x**2"
+	  },
+	  "params": {
+		"a": 1.4
+	  },
+	  "initial": [0.01, 0.00, 0.01],
+	  "defaults": {
+		"procedure": "DP5",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 0.000001,
+		"max_dt": 0.1,
+		"steps": 10000,
+		"burn_in": 300,
+		"scale": 0.2
+	  },
+	  "summary": "A cyclically symmetric chaotic system with a three-lobed structure introduced by Halvorsen and later analyzed by Sprott.",
+	  "source": "J. C. Sprott (1997), 'A Symmetric Chaotic Flow', University of Wisconsin–Madison.",
+	  "details": "The single parameter 'a' controls damping; values near 1.27 lead to a period-doubling route to chaos. Increasing 'a' enhances dissipation and shrinks the attractor; decreasing it enlarges trajectories and increases chaotic behavior."
+	},
+
+	"Hindmarsh–Rose": {
+	  "rhs": {
+		"dx": "y - a*x**3 + b*x**2 + I - z",
+		"dy": "c - d*x**2 - y",
+		"dz": "r*(s*(x - x1) - z)"
+	  },
+	  "params": {
+		"a": 1.0,
+		"b": 3.0,
+		"c": 1.0,
+		"d": 5.0,
+		"s": 4.0,
+		"r": 0.006,
+		"x1": -1.6,
+		"I": 3.25
+	  },
+	  "initial": [0.0, 0.0, 0.0],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.005,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 50000,
+		"burn_in": 1000,
+		"scale": 0.5
+	  },
+	  "summary": "A neuronal bursting model generating chaotic transitions between spiking and resting states, originally introduced by Hindmarsh and Rose.",
+	  "source": "Hindmarsh & Rose (1984), Proc. Royal Society B 221, 87–102.",
+	  "details": "Parameter 'I' is the input current controlling transitions between resting, spiking, and bursting modes. Parameters 'a', 'b', and 'd' shape the fast cubic and quadratic terms driving spikes. Parameter 's' determines the strength of slow modulation, while 'r' sets the speed of the slow variable z; decreasing 'r' creates slower bursting dynamics."
+	},
+	
+	"Langford": {
+	  "rhs": {
+		"dx": "(z - b) * x - d * y",
+		"dy": "d * x + (z - b) * y",
+		"dz": "c + a * z - (z**3)/3 - (x**2 + y**2) * (1 + e * z)"
+	  },
+	  "params": {
+		"a": 0.95,
+		"b": 0.7,
+		"c": 0.6,
+		"d": 3.5,
+		"e": 0.25
+	  },
+	  "initial": [0.1, 0.0, 0.0],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.015,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 15000,
+		"burn_in": 300,
+		"scale": 1.1
+	  },
+	  "summary": "A classical torus-breakdown chaotic system introduced by Langford, involving Hopf–hysteresis interactions.",
+	  "source": "W. F. Langford (1984), Numerical Studies of Torus Bifurcations.",
+	  "details": "Parameter 'a' influences vertical growth in z, 'b' shifts the rotational plane, and 'c' creates vertical bias. Parameter 'd' controls rotation speed in x–y, while 'e' introduces nonlinear modulation that shapes the torus breakdown cascade."
+	},
+
+	"Li": {
+	  "rhs": {
+		"dx": "a * (y - x) + d * x * z",
+		"dy": "k * x + f * y - x * z",
+		"dz": "-e * x**2 + x * y + c * z"
+	  },
+	  "params": {
+		"a": 40.0,
+		"c": 1.8333333,
+		"d": 0.16,
+		"e": 0.65,
+		"f": 20.0,
+		"k": 55.0
+	  },
+	  "initial": [0.01, 0.0, 0.0],
+	  "defaults": {
+		"procedure": "DP5",
+		"dt": 0.01,
+		"tolerance": 1e-6,
+		"min_dt": 0.0,
+		"max_dt": 0.01,
+		"steps": 7000,
+		"burn_in": 1000,
+		"scale": 0.01
+	  },
+	  "summary": "A Lorenz-type three-scroll chaotic system with quadratic coupling, introduced by Li in 2008.",
+	  "source": "D. Li (2008), 'A three-scroll chaotic attractor', Physics Letters A 372, 387–393.",
+	  "details": "Parameter 'a' controls linear relaxation between x and y. 'd' introduces nonlinear xz feedback that bends trajectories. 'k' and 'f' regulate excitation and damping in y. 'e' shapes the parabolic -e*x^2 curvature, and 'c' controls vertical contraction in z, influencing scroll separation."
+	},
+
+	"Lorenz": {
+	  "rhs": {
+		"dx": "a * (y - x)",
+		"dy": "x * (b - z) - y",
+		"dz": "x * y - c * z"
+	  },
+	  "params": {
+		"a": 10.0,
+		"b": 28.0,
+		"c": 2.6666666667
+	  },
+	  "initial": [0.01, 0.01, 0.01],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 15000,
+		"burn_in": 500,
+		"scale": 0.1
+	  },
+	  "summary": "The classical double-wing chaotic attractor discovered by Edward N. Lorenz in 1963.",
+	  "source": "E. N. Lorenz (1963), 'Deterministic Nonperiodic Flow', Journal of the Atmospheric Sciences 20, 130–141.",
+	  "details": "Parameter 'a' acts as the Prandtl number, shaping coupling strength between x and y. 'b' is the Rayleigh parameter controlling convection strength. 'c' governs vertical contraction; lowering it produces tighter coils, while increasing it expands the attractor vertically."
+	},
+
+	"Lotka–Volterra": {
+	  "rhs": {
+		"dx": "x - x*y + c*x**2 - a*z*x**2",
+		"dy": "-y + x*y",
+		"dz": "-b*z + a*z*x**2"
+	  },
+	  "params": {
+		"a": 2.9851,
+		"b": 3.0,
+		"c": 2.1
+	  },
+	  "initial": [0.9, 0.9, 0.5],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 0.000001,
+		"max_dt": 0.1,
+		"steps": 15000,
+		"burn_in": 50,
+		"scale": 10
+	  },
+	  "summary": "Three-dimensional extension of the classical predator–prey model, exhibiting torus breakdown and chaotic oscillations.",
+	  "source": "Samardzija & Greller (1988), Bulletin of Mathematical Biology 50, 465–491.",
+	  "details": "Parameter 'a' controls nonlinear predator coupling via the term a*z*x^2. 'b' sets damping in the z population. 'c' produces self-reinforcing growth of x; increasing 'c' expands the attractor and speeds up oscillations."
+	},
+	
+	"Lü": {
+	  "rhs": {
+		"dx": "a * (y - x)",
+		"dy": "c * y - x * z",
+		"dz": "x * y - b * z"
+	  },
+	  "params": {
+		"a": 36.0,
+		"b": 3.0,
+		"c": 20.0
+	  },
+	  "initial": [0.1, 0.0, 0.0],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.005,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 10000,
+		"burn_in": 300,
+		"scale": 0.08
+	  },
+	  "summary": "A chaotic system that smoothly bridges Lorenz-type and Chen-type dynamics.",
+	  "source": "Lü, J., & Chen, G. (2002). A new chaotic attractor coined. International Journal of Bifurcation and Chaos, 12(3), 659–661. https://doi.org/10.1142/S0218127402004620",
+	  "details": "Parameter 'a' controls coupling between x and y; 'b' sets dissipation along z; 'c' governs amplification in y. Varying 'c' within the chaotic range reshapes the double-scroll structure between Lorenz-like and Chen-like behavior."
+	},
+	
+	"Newton–Leipnik": {
+	  "rhs": {
+		"dx": "-b*x + y + 10*y*z",
+		"dy": "-x - b*y + 5*x*z",
+		"dz": "a*z - 5*x*y"
+	  },
+	  "params": {
+		"a": 0.175,
+		"b": 0.4
+	  },
+	  "initial": [0.349, 0.000, -0.180],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 50000,
+		"burn_in": 0,
+		"scale": 3.0
+	  },
+	  "summary": "A quadratic flow derived from rigid body dynamics with linear feedback, producing two coexisting strange attractors.",
+	  "source": "Leipnik, R. B., & Newton, T. A. (1981). Double strange attractors in rigid body motion with linear feedback control. Physics Letters A, 86(2), 63–67. https://doi.org/10.1016/0375-9601(81)90165-1",
+	  "details": "Parameter 'a' governs vertical stretching; 'b' controls linear damping in x and y. The cubic coupling terms 10*y*z, 5*x*z, and 5*x*y generate strong twisting that produces two coexisting attractors highly sensitive to initial conditions."
+	},
+	
+	"Nosé–Hoover": {
+	  "rhs": {
+		"dx": "y",
+		"dy": "-x - z*y",
+		"dz": "a * (y**2 - 1)"
+	  },
+	  "params": {
+		"a": 1.5
+	  },
+	  "initial": [1.0, 0.0, 0.0],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 10000,
+		"burn_in": 500,
+		"scale": 1
+	  },
+	  "summary": "A thermostatted harmonic oscillator generating chaotic motion via the Nosé–Hoover feedback mechanism.",
+	  "source": "Nosé, S. (1984). A unified formulation of the constant temperature molecular dynamics methods. The Journal of Chemical Physics, 81(1), 511–519. https://doi.org/10.1063/1.447334; Hoover, W. G. (1985). Canonical dynamics: Equilibrium phase-space distributions. Physical Review A, 31(3), 1695–1697. https://doi.org/10.1103/PhysRevA.31.1695; Posch, H. A., Hoover, W. G., & Vesely, F. J. (1986). Canonical dynamics of the Nosé oscillator: Stability, chaos, and heat flow. Physical Review A, 33(6), 4253–4265. https://doi.org/10.1103/PhysRevA.33.4253",
+	  "details": "Parameter 'a' controls the strength of the thermostat feedback. For smaller 'a' the motion is mostly regular; around a ≈ 1.5 the system becomes chaotic. Increasing 'a' further strengthens the coupling in the dz/dt equation and can modify the thickness and folding of the attractor."
+	},
+
+	"Rabinovich–Fabrikant": {
+	  "rhs": {
+		"dx": "y*(z - 1 + x**2) + a*x",
+		"dy": "x*(3*z + 1 - x**2) + a*y",
+		"dz": "-2*z*(b + x*y)"
+	  },
+	  "params": {
+		"a": 0.87,
+		"b": 1.1
+	  },
+	  "initial": [-1.0, 0.0, 0.5],
+	  "defaults": {
+		"procedure": "DP5",
+		"dt": 0.01,
+		"tolerance": 5e-5,
+		"min_dt": 1e-6,
+		"max_dt": 0.05,
+		"steps": 7000,
+		"burn_in": 1000,
+		"scale": 2
+	  },
+	  "summary": "A chaotic system arising from wave self-modulation in nonequilibrium nonlinear media.",
+	  "source": "Rabinovich, M. I., & Fabrikant, A. L. (1979). Stochastic self-modulation of waves in nonequilibrium media. Soviet Physics JETP, 50(2), 311–316. http://jetp.ras.ru/cgi-bin/dn/e_050_02_0311.pdf",
+	  "details": "Parameter 'a' (γ) controls instability growth and amplification of oscillations; increasing it expands the attractor. Parameter 'b' (ν) regulates damping of satellite modes; larger values suppress motion. The nonlinear products x*y and x**2 generate strong folding and twisting responsible for chaotic behavior."
+	},
+	
+	"Rikitake": {
+	  "rhs": {
+		"dx": "-b * x + z * y",
+		"dy": "-b * y + (z - a) * x",
+		"dz": "1 - x * y"
+	  },
+	  "params": {
+		"a": 5.0,
+		"b": 2.0
+	  },
+	  "initial": [1.0, 1.0, 1.0],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 20000,
+		"burn_in": 500,
+		"scale": 0.4
+	  },
+	  "summary": "A chaotic dynamo model introduced by Rikitake to explain magnetic field reversals in coupled rotating disks.",
+	  "source": "Rikitake, T. (1957). Oscillations of a System of Disk Dynamos. Proc. Cambridge Phil. Soc., 54, 89–105. https://doi.org/10.1017/S0305004100033223; McMillen, T. (1999). The Shape and Dynamics of the Rikitake Attractor. The Nonlinear Journal, 1, 1–10.",
+	  "details": "Parameter 'b' controls damping, while 'a' sets coupling strength. Increasing 'a' intensifies the interaction between x and y, influencing polarity reversal frequency. Stronger damping (larger 'b') suppresses wide excursions in z."
+	},
+	
+	"Rössler": {
+	  "rhs": {
+		"dx": "-(y + z)",
+		"dy": "x + a*y",
+		"dz": "b + z*(x - c)"
+	  },
+	  "params": {
+		"a": 0.2,
+		"b": 0.2,
+		"c": 5.7
+	  },
+	  "initial": [0.01, 0.0, 0.0],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.05,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 15000,
+		"burn_in": 1000,
+		"scale": 0.2
+	  },
+	  "summary": "A minimal three-dimensional chaotic system with a single quadratic nonlinearity, introduced by Otto E. Rössler in 1976.",
+	  "source": "Rössler, O. E. (1976). An equation for continuous chaos. Physics Letters A, 57(5), 397–398. https://doi.org/10.1016/0375-9601(76)90101-8",
+	  "details": "Parameter 'a' controls linear growth in y, 'b' shifts the z-direction baseline, and 'c' sets the threshold in the z*(x - c) term. Increasing 'c' or decreasing 'a' can move the system from simple limit cycles to chaotic band dynamics."
+	},
+	
+	"Shimizu–Morioka": {
+	  "rhs": {
+		"dx": "y",
+		"dy": "(1 - z) * x - a * y",
+		"dz": "x**2 - b * z"
+	  },
+	  "params": {
+		"a": 0.7,
+		"b": 0.1
+	  },
+	  "initial": [0.1, 0.0, 0.2],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 50000,
+		"burn_in": 500,
+		"scale": 1.5
+	  },
+	  "summary": "A Lorenz-like chaotic system used as a normal form for studying symmetry breaking and bifurcations.",
+	  "source": "Shimizu, T., & Morioka, N. (1980). On the bifurcation of a symmetric limit cycle to an asymmetric one in a simple model. Physics Letters A, 76(3–4), 201–204. https://doi.org/10.1016/0375-9601(80)90466-1; Shil'nikov, A. L. (1993). On bifurcations of the Lorenz attractor in the Shimizu–Morioka model. Physica D, 62, 338–346. https://doi.org/10.1016/0167-2789(93)90292-9",
+	  "details": "Parameter 'a' controls damping in the y-equation; increasing it suppresses oscillations. Parameter 'b' controls relaxation of z; smaller b enlarges the attractor. The nonlinear coupling x**2 generates Lorenz-like lobe switching."
+	},
+	
+	"Sprott-D": {
+	  "rhs": {
+		"dx": "-y",
+		"dy": "x + z",
+		"dz": "x*z + a*y**2"
+	  },
+	  "params": {
+		"a": 3.0
+	  },
+	  "initial": [0.1, 0.0, 0.0],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.01,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 30000,
+		"burn_in": 500,
+		"scale": 0.7
+	  },
+	  "summary": "One of the algebraically simplest chaotic flows identified by Sprott (system D), containing two nonlinear terms and producing a folded-band chaotic attractor.",
+	  "source": "Sprott, J. C. (1994). Some simple chaotic flows. Physical Review E, 50(2), 647–650. https://doi.org/10.1103/PhysRevE.50.R647; Sprott, J. C. (2010). Elegant Chaos: Algebraically Simple Chaotic Flows. World Scientific. https://doi.org/10.1142/7183",
+	  "details": "Parameter 'a' controls the strength of the quadratic nonlinearity y**2, shaping the width and curvature of the attractor's folded band. Larger 'a' amplifies stretching in the z direction. The system remains highly sensitive to initial conditions despite its minimal algebraic form."
+	},
+	
+	"Thomas": {
+	  "rhs": {
+		"dx": "- b*x + sin(y)",
+		"dy": "- b*y + sin(z)",
+		"dz": "- b*z + sin(x)"
+	  },
+	  "params": {
+		"b": 0.15
+	  },
+	  "initial": [0.01, 0.02, 0.03],
+	  "defaults": {
+		"procedure": "RK4",
+		"dt": 0.03,
+		"tolerance": 1e-4,
+		"min_dt": 1e-6,
+		"max_dt": 0.1,
+		"steps": 10000,
+		"burn_in": 500,
+		"scale": 0.7
+	  },
+	  "summary": "A cyclically coupled nonlinear system exhibiting labyrinth-type chaos, introduced by René Thomas.",
+	  "source": "Thomas, R. (1999). Deterministic chaos seen in terms of feedback circuits: analysis, synthesis, 'labyrinth chaos'. International Journal of Bifurcation and Chaos, 9(10), 1889–1905. https://doi.org/10.1142/S0218127499001383",
+	  "details": "Parameter 'b' controls damping; values near 0.15 produce labyrinth-like chaotic trajectories. The nonlinear sin() feedback in cyclic order x→y→z→x generates folding and stretching typical for this attractor."
+	}
+
+
   }
 }

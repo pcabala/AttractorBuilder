@@ -173,9 +173,8 @@ is available at:
 
 ## 📝 License
 
-Specify your license here, e.g.:
 
-**MIT License**
+**GPL-2.0-or-later**
 
 ---
 
