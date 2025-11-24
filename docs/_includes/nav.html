@@ -1,0 +1,54 @@
+﻿{% assign L = page.lang | default: 'en' %}
+{% assign t = site.data.i18n[L] %}
+{% assign current = page.url | relative_url %}
+{% assign home_path = t.paths.home | relative_url %}
+
+<nav>
+  <a href="{{ t.paths.home | relative_url }}"
+     class="{% if current == home_path %}active{% endif %}">
+     {{ t.nav.home }}
+  </a> |
+
+  <a href="{{ t.paths.systems | relative_url }}"
+     class="{% if current contains '/systems/' or current contains '/systemy/' %}active{% endif %}">
+     {{ t.nav.systems }}
+  </a> |
+
+  <a href="{{ t.paths.methods | relative_url }}"
+     class="{% if current contains '/methods/' or current contains '/metody/' %}active{% endif %}">
+     {{ t.nav.methods }}
+  </a> |
+
+  <a href="{{ t.paths.addon | relative_url }}"
+     class="{% if current contains '/addon/' %}active{% endif %}">
+     {{ t.nav.addon }}
+  </a> |
+
+<!-- Gallery temporarily disabled
+  <a href="{{ t.paths.gallery | relative_url }}"
+     class="{% if current contains '/gallery/' or current contains '/galeria/' %}active{% endif %}">
+     {{ t.nav.gallery }}
+  </a> |
+-->
+  <a href="{{ t.paths.about | relative_url }}"
+     class="{% if current contains '/info/' %}active{% endif %}">
+     {{ t.nav.about }}
+  </a>
+
+  <span style="margin-left:auto; float:right;">
+    {% if page.lang == 'en' %}
+      <span style="font-weight:bold;">EN</span> |
+      {% assign pl_fallback = site.data.i18n.pl.paths.home %}
+      <a href="{{ (page.alt_url | default: pl_fallback) | relative_url }}">PL</a>
+    {% else %}
+      {% assign en_fallback = site.data.i18n.en.paths.home %}
+      <a href="{{ (page.alt_url | default: en_fallback) | relative_url }}">EN</a> |
+      <span style="font-weight:bold;">PL</span>
+    {% endif %}
+  </span>
+
+</nav>
+
+
+
+

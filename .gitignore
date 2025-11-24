@@ -1,8 +1,19 @@
-﻿__pycache__/
+﻿# Python / Blender
+__pycache__/
 *.pyc
 *.pyo
-*.zip
 *.blend1
 *.blend@
+
+# Jekyll (strona docs/)
+_site/
+.jekyll-cache/
+.sass-cache/
+.jekyll-metadata
+
+# System / IDE
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
+Icon?

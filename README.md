@@ -1,4 +1,3 @@
-
 # Attractor Builder — Blender Add-on
 
 Attractor Builder is a free Blender add-on for numerical integration and
@@ -22,7 +21,7 @@ chaotic dynamics, generative art, or mathematical visualization.
 5. The add-on panel will appear in the **N-panel → Attractors**.
 
 <p align="center">
-  <img src="assets/media/addon/intro.png" width="750">
+  <img src="docs/assets/media/addon/intro.png" width="750" alt="Attractor Builder – panel location">
 </p>
 
 ---
@@ -30,15 +29,17 @@ chaotic dynamics, generative art, or mathematical visualization.
 ## 📂 Features Overview
 
 ### **✓ Default Mode — Built-in Systems**
+
 The Default mode contains a curated set of well-known dynamical systems  
 (Lorenz, Chen, Lü, Thomas, Arneodo–Coullet–Tresser, and others) with  
 preconfigured equations and parameters.
 
 <p align="center">
-  <img src="assets/media/addon/mode_default.png" width="750">
+  <img src="docs/assets/media/addon/mode_default.png" width="750" alt="Attractor Builder – Default mode">
 </p>
 
 Each system includes:
+
 - differential equations (`dx/dt`, `dy/dt`, `dz/dt`)
 - editable parameters (e.g., `a`, `b`, `c`)
 - a **Copy** button to transfer the system into Custom Mode
@@ -46,34 +47,29 @@ Each system includes:
 ---
 
 ### **✓ Custom Mode — User-defined Equations**
+
 You can define your own dynamical system using safe mathematical expressions.
 
 Allowed variables:
 
-
-x, y, z
-
+- `x`, `y`, `z`
 
 Allowed functions:
 
-
-sin, cos, tan, asin, acos, atan,
-sinh, cosh, tanh,
-exp, log, sqrt, pow, fabs
-
+- `sin`, `cos`, `tan`, `asin`, `acos`, `atan`  
+- `sinh`, `cosh`, `tanh`  
+- `exp`, `log`, `sqrt`, `pow`, `fabs`
 
 Allowed operators:
 
-
-+, -, *, /, **, %, unary +, unary -
-
+- `+`, `-`, `*`, `/`, `**`, `%`, unary `+`, unary `-`
 
 After typing the equations, use **Detect Parameters** to analyze the system
 and build a parameter list. You can then save your system to the **Custom Library**
 (internal JSON storage), add notes, edit entries, or delete them.
 
 <p align="center">
-  <img src="assets/media/addon/mode_custom.png" width="750">
+  <img src="docs/assets/media/addon/mode_custom.png" width="750" alt="Attractor Builder – Custom mode">
 </p>
 
 ---
@@ -83,21 +79,24 @@ and build a parameter list. You can then save your system to the **Custom Librar
 You can choose between:
 
 #### **Fixed Step Methods**
+
 - Euler  
 - Heun (RK2)  
 - Runge–Kutta 4 (RK4)
 
 Settings include:
+
 - **Time Step (dt)**
 - **Steps**
 - **Burn-in**
 - **Scale**
 
 <p align="center">
-  <img src="assets/media/addon/fixed_dt.png" width="750">
+  <img src="docs/assets/media/addon/fixed_dt.png" width="750" alt="Attractor Builder – fixed dt settings">
 </p>
 
 #### **Adaptive Step Methods**
+
 - Runge–Kutta–Fehlberg 4(5) (RKF45)  
 - Dormand–Prince 5(4) (DP5)
 
@@ -109,7 +108,7 @@ Instead, the step size is chosen automatically based on:
 - **Max Step**
 
 <p align="center">
-  <img src="assets/media/addon/adaptive_dt.png" width="750">
+  <img src="docs/assets/media/addon/adaptive_dt.png" width="750" alt="Attractor Builder – adaptive dt settings">
 </p>
 
 ---
@@ -123,16 +122,13 @@ After building the trajectory, the **Raw Data** section becomes available.
 - **Points** — creates a mesh containing all generated points  
 - **Export** — saves a CSV file with columns:
 
-
-
-steps, dt, x, y, z
-
+  `steps, dt, x, y, z`
 
 Row `0` contains the initial conditions.  
 In adaptive methods, `dt` varies at every step.
 
 <p align="center">
-  <img src="assets/media/addon/output.png" width="750">
+  <img src="docs/assets/media/addon/output.png" width="750" alt="Attractor Builder – output section">
 </p>
 
 ---
@@ -142,12 +138,13 @@ In adaptive methods, `dt` varies at every step.
 Available only after generating an attractor.
 
 Tools include:
+
 - **Trim** — cut the beginning or end of the curve  
 - **Simplify** — reduce the number of Poly Curve points  
 - **Smooth to Bezier** — convert to a Bézier curve using a smoothing algorithm  
 
 <p align="center">
-  <img src="assets/media/addon/post_processing.png" width="750">
+  <img src="docs/assets/media/addon/post_processing.png" width="750" alt="Attractor Builder – post-processing tools">
 </p>
 
 These tools help prepare trajectories for animation or artistic rendering.
@@ -156,10 +153,20 @@ These tools help prepare trajectories for animation or artistic rendering.
 
 ## 📘 Documentation
 
-Full documentation (PL/EN) with detailed examples and mathematical explanations  
-is available at:
+Full documentation (PL/EN) with detailed examples and mathematical explanations is available at:
 
-👉 **https://pcabala.github.io/**
+👉 **https://pcabala.github.io/AttractorBuilder/**  
+*(after enabling GitHub Pages for this repository with `/docs` as the source)*
+
+---
+
+## 🐞 Feedback & Issues
+
+If you have suggestions, ideas for improvements, or notice any bugs, please open an Issue:
+
+👉 **https://github.com/pcabala/AttractorBuilder/issues**
+
+This helps keep all reports organized and visible to other users.
 
 ---
 
@@ -172,7 +179,6 @@ is available at:
 ---
 
 ## 📝 License
-
 
 **GPL-2.0-or-later**
 

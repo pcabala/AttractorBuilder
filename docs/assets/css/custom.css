@@ -1,0 +1,349 @@
+/* ==============================
+   Custom styles for Strange Attractors site
+   ============================== */
+
+/* --- Global body layout: jeden wspólny "korytarz" --- */
+body {
+  font-family: "Georgia", "Times New Roman", serif;
+  line-height: 1.7;
+  color: #222;
+  background-color: #fafafa;
+
+  /* WYŚRODKOWANA strona o szerokości maks. 900px */
+  margin: 1em auto;
+  max-width: 900px;
+  padding: 0;
+}
+
+/* Wspólny poziomy padding dla menu i treści */
+nav,
+main.page-content {
+  padding: 0 1.2em;
+}
+
+/* --- Headings --- */
+h1, h2, h3 {
+  font-family: "Palatino Linotype", "Book Antiqua", serif;
+  color: #1a1a1a;
+}
+
+h1 {
+  font-size: 1.9em;
+  margin-top: 1.4em;
+  margin-bottom: 0.8em;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+h2 {
+  font-size: 1.4em;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  border-top: 0;
+  padding-top: 0;
+}
+
+h3 {
+  font-size: 1.2em;
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+}
+
+/* --- Paragraphs --- */
+p {
+  margin-top: 0.3em;
+  margin-bottom: 0.9em;
+  text-align: justify;
+}
+
+/* Wcięcie od drugiego akapitu */
+p + p {
+  text-indent: 1.2em;
+}
+
+/* --- Blockquotes --- */
+blockquote {
+  font-style: italic;
+  color: #555;
+  border-left: 3px solid #ccc;
+  padding-left: 1em;
+  margin: 1.5em 0;
+}
+
+/* --- Główne menu u góry --- */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;   /* linki menu DO LEWEJ */
+  gap: 0.5rem 0.8rem;
+  margin-bottom: -0.5em;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.1em;
+}
+
+/* Odstęp treści od menu */
+main.page-content {
+  margin-top: 0.5rem;
+}
+
+/* --- Linki globalne --- */
+a {
+  color: #0044cc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* --- Linki w top nav --- */
+nav a {
+  font-weight: 500;
+  color: #333;
+}
+nav a:hover {
+  color: #0056b3;
+}
+
+/* Aktywny link w nav: pogrubienie + delikatny underline */
+nav a.active {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* --- (opcjonalnie) przełącznik języka, jeśli kiedyś użyjesz .nav-lang zamiast inline-style --- */
+nav .nav-lang {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+nav .nav-lang .active {
+  font-weight: 700;
+  color: #111;
+}
+nav .nav-lang .sep {
+  color: #94a3b8;
+}
+
+/* --- Sekcje ogólne --- */
+section {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+/* --- Tabele (responsywne) --- */
+table {
+  border-collapse: collapse;
+  margin: 0.6em 0;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+}
+thead th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+/* --- Submenu systemów (lista atraktorów) --- */
+.systems-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;   /* DO LEWEJ */
+  gap: 0.2rem 0.6rem;
+  padding: 0.1rem 0;
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  position: sticky;
+  top: 0;
+  background: #fafafa;
+  z-index: 10;
+  border-bottom: 1px solid #d1d5db;
+
+  /* gdy linków jest dużo – poziomy scroll, zamiast łamać layout */
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+/* Attractor links – compact, blue */
+.systems-subnav a {
+  color: #0b63c7;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.05rem 0.3rem;
+  margin-right: 0.2rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.systems-subnav a:last-child {
+  margin-right: 0;
+}
+.systems-subnav a:hover {
+  color: #063d82;
+}
+.systems-subnav a.active {
+  font-weight: 700;
+}
+
+/* --- Attractor page layout --- */
+
+/* Nagłówek strony systemu */
+h1.attractor-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.6rem 0 0.8rem;
+  text-align: left;
+  color: #111;
+  padding-left: 0.2rem;  /* lekkie wyrównanie z filmem */
+}
+
+/* Blok wideo atraktora – lewo, spójnie z tekstem */
+.attractor-hero {
+  max-width: 960px;           /* docelowa szerokość wideo w kolumnie */
+  margin: 0.8rem 0 1.2rem;    /* do lewej (bez auto) */
+}
+
+/* Kafelek wideo 4:3 */
+.attractor-hero .media-frame {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 320px;          /* fallback gdyby aspect-ratio nie zadziałało */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+/* Samo <video> wewnątrz kafelka */
+.attractor-hero video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* wypełnia całość; zmień na 'contain' jeśli wolisz bez cropa */
+  background: transparent;
+}
+
+/* Sekcje tekstowe na stronach systemów */
+.attractor-section {
+  margin: 1.2rem 0;
+}
+.attractor-meta {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* Monospace block dla równań/ustawień z dodatku */
+pre.eq-plain {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  margin: 0.6rem 0;
+  overflow: auto;
+}
+
+/* Jednolinijkowe równania wyrównane do lewej */
+.mathline {
+  margin: 0.5rem 0 0.5rem 1rem;  /* góra, prawo, dół, lewo */
+  line-height: 1.35;
+  padding-left: 0;
+  text-indent: 0;
+  font-size: 1rem;
+}
+
+/* ===========================
+   Mobile-first hardening pack
+   =========================== */
+
+/* 2.1 Pudełkowanie i skalowanie tekstu na iOS */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+/* 2.2 Marginesy i padding dla wąskich ekranów */
+@media (max-width: 420px) {
+  body {
+    padding: 0 0.9em;
+    margin: 1.2em auto;
+  }
+}
+
+/* 2.3 Płynna typografia nagłówków i treści */
+h1 { font-size: clamp(26px, 4.5vw, 34px); }
+h2 { font-size: clamp(20px, 3.6vw, 24px); }
+h3 { font-size: clamp(18px, 3.2vw, 20px); }
+p, li { font-size: clamp(16px, 2.6vw, 18px); }
+
+/* 2.4 Na wąskich ekranach: bez wcięcia i bez justowania */
+@media (max-width: 420px) {
+  p { text-align: left; }
+  p + p { text-indent: 0; }
+}
+
+/* 2.5 Grafiki, wideo, iframe – nie rozpychają ekranu */
+img, svg, video, canvas, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 2.6 Bloki kodu i tabelki – zapobiegaj „rozpychaniu” ekranu */
+pre, code { white-space: pre-wrap; word-break: break-word; }
+
+/* 2.7 Top nav – ciaśniejszy na bardzo wąskich ekranach */
+@media (max-width: 360px) {
+  nav {
+    gap: 0.4rem 0.6rem;
+  }
+}
+
+/* 2.9 Kafelek wideo – mniejsza wysokość na super wąskich ekranach */
+@media (max-width: 360px) {
+  .attractor-hero .media-frame {
+    min-height: 260px;
+  }
+}
+
+/* 2.10 „Tap targets” – linki bardziej dotykalne na dotykowych urządzeniach */
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+}
+
+/* ─── Override dla wideo na stronach systemów (przezroczyste WebM 4:3) ─── */
+.sys-video.sys-video--alpha .video-frame {
+  background: transparent !important;
+}
+
+.sys-video.sys-video--alpha video {
+  object-fit: contain !important;
+  background: transparent !important;
+  display: block;
+}
+
+/* =========================================
+   Wymuszenie wyrównania treści z menu
+   ========================================= */
+
+/* 
+   Pierwszy poziom wewnątrz main.page-content
+   ma korzystać z tej samej szerokości co body/nav.
+   Bez dodatkowych węższych wrapperów, marginesów itd.
+*/
+main.page-content > * {
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}

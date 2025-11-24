@@ -1,0 +1,31 @@
+en:
+  nav:
+    home: Home
+    systems: Systems
+    methods: Methods
+    addon: Add-on
+    # gallery: Gallery
+    about: Info
+  paths:
+    home: /en/
+    systems: /en/systems/lorenz/
+    methods: /en/methods/
+    # gallery: /en/gallery/
+    addon: /en/addon/
+    about: /en/info/
+
+pl:
+  nav:
+    home: Start
+    systems: Systemy
+    methods: Metody
+    addon: Add-on
+    # gallery: Galeria
+    about: Info
+  paths:
+    home: /pl/
+    systems: /pl/systemy/lorenz/
+    methods: /pl/metody/
+    addon: /pl/addon/
+    # gallery: /pl/galeria/
+    about: /pl/info/

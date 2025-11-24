@@ -1,0 +1,25 @@
+---
+layout: base
+---
+<!doctype html>
+<html lang="{{ page.lang | default: 'en' }}">
+  <head>
+    <meta charset="utf-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+    <title>{{ page.title | default: site.title }}</title>
+    {% if page.alt_url and page.alt_lang %}
+      <link rel="alternate" hreflang="{{ page.alt_lang }}" href="{{ page.alt_url | relative_url }}">
+    {% endif %}
+    {% include mathjax.html %}
+    <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+  </head>
+  <body>
+    {% include nav.html %}
+    {% include lang_switch.html %}
+    <main class="page-content" aria-label="Content">
+      {{ content }}
+    </main>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+{% if page.alt_url and page.alt_lang %}
+<p style="text-align:right; margin-top:-0.5em;">
+  <a href="{{ page.alt_url | relative_url }}">
+    {% if page.alt_lang == 'pl' %}Polski{% else %}English{% endif %}
+  </a>
+</p>
+{% endif %}
