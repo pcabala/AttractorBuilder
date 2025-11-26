@@ -12,7 +12,7 @@ both classic and custom chaotic models — directly inside **Blender 4.5+**.
 
 1. Download the add-on:
 
-   👉 **[Download `attractor_builder.zip`](https://raw.githubusercontent.com/pcabala/AttractorBuilder/main/attractor_builder.zip)**
+   👉 **[Download `attractor_builder.zip`](https://github.com/pcabala/AttractorBuilder/raw/main/attractor_builder.zip)**
 
 2. In Blender, open  
    **Edit → Preferences → Add-ons**
