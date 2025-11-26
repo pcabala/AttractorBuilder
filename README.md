@@ -10,12 +10,16 @@ both classic and custom chaotic models — directly inside **Blender 4.5+**.
 
 ## Installation
 
-1. Download **`attractor_builder.zip`** from this repository.  
-2. In Blender, open:  
-   **Edit → Preferences → Add-ons**  
-3. Click **Install…** and select the ZIP file.  
-4. Enable the add-on in the list.  
+1. Download the add-on:
+
+   👉 **[Download `attractor_builder.zip`](https://raw.githubusercontent.com/pcabala/AttractorBuilder/main/attractor_builder.zip)**
+
+2. In Blender, open  
+   **Edit → Preferences → Add-ons**
+3. Click **Install…** and choose the ZIP file.
+4. Enable the add-on in the list.
 5. The add-on will appear in the **N-panel → Attractors**.
+
 
 <img src="docs/assets/media/addon/intro.png" alt="Attractor Builder – panel location">
 
