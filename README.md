@@ -1,5 +1,7 @@
 ## Attractor Builder — Blender Add-on
 
+<img src="docs/assets/media/icons/blender.svg" width="80" alt="Blender icon">
+
 Attractor Builder is a free Blender add-on for numerical integration and
 3D visualization of nonlinear dynamical systems.  
 It allows you to generate trajectories of differential equations,
