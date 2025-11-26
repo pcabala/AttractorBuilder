@@ -1,190 +1,140 @@
-# Attractor Builder — Blender Add-on
+## Attractor Builder — Blender Add-on
 
 Attractor Builder is a free Blender add-on for numerical integration and
 3D visualization of nonlinear dynamical systems.  
-It allows you to generate trajectories of differential equation systems,
+It allows you to generate trajectories of differential equations,
 export raw simulation data, build animated attractors, and experiment with
 both classic and custom chaotic models — directly inside **Blender 4.5+**.
 
-The add-on is designed for researchers, students, and artists interested in
-chaotic dynamics, generative art, or mathematical visualization.
-
 ---
 
-## 📥 Installation
+## Installation
 
-1. Download the file **`attractor_builder.zip`** from the GitHub repository.  
+1. Download **`attractor_builder.zip`** from this repository.  
 2. In Blender, open:  
    **Edit → Preferences → Add-ons**  
-3. Click **Install…** and select the downloaded ZIP file.  
+3. Click **Install…** and select the ZIP file.  
 4. Enable the add-on in the list.  
-5. The add-on panel will appear in the **N-panel → Attractors**.
+5. The add-on will appear in the **N-panel → Attractors**.
 
-<p align="center">
-  <img src="docs/assets/media/addon/intro.png" width="750" alt="Attractor Builder – panel location">
-</p>
+<img src="docs/assets/media/addon/intro.png" alt="Attractor Builder – panel location">
 
 ---
 
-## 📂 Features Overview
+## Features
 
-### **✓ Default Mode — Built-in Systems**
+### Default Mode (built-in systems)
 
-The Default mode contains a curated set of well-known dynamical systems  
-(Lorenz, Chen, Lü, Thomas, Arneodo–Coullet–Tresser, and others) with  
-preconfigured equations and parameters.
-
-<p align="center">
-  <img src="docs/assets/media/addon/mode_default.png" width="750" alt="Attractor Builder – Default mode">
-</p>
-
+A curated set of classic dynamical systems, including Lorenz, Chen, Lü, Thomas,
+Arneodo–Coullet–Tresser, and others.  
 Each system includes:
 
 - differential equations (`dx/dt`, `dy/dt`, `dz/dt`)
-- editable parameters (e.g., `a`, `b`, `c`)
-- a **Copy** button to transfer the system into Custom Mode
+- editable parameters
+- “Copy to Custom Mode”
+
+<img src="docs/assets/media/addon/mode_default.png" alt="Default mode">
 
 ---
 
-### **✓ Custom Mode — User-defined Equations**
+### Custom Mode (user-defined equations)
 
-You can define your own dynamical system using safe mathematical expressions.
+Define a custom dynamical system using safe mathematical expressions.
 
 Allowed variables:
 
-- `x`, `y`, `z`
+`x`, `y`, `z`
 
 Allowed functions:
 
-- `sin`, `cos`, `tan`, `asin`, `acos`, `atan`  
-- `sinh`, `cosh`, `tanh`  
-- `exp`, `log`, `sqrt`, `pow`, `fabs`
+`sin`, `cos`, `tan`, `asin`, `acos`, `atan`,  
+`sinh`, `cosh`, `tanh`, `exp`, `log`, `sqrt`, `pow`, `fabs`
 
 Allowed operators:
 
-- `+`, `-`, `*`, `/`, `**`, `%`, unary `+`, unary `-`
+`+`, `-`, `*`, `/`, `**`, `%`, unary `+`, unary `-`
 
-After typing the equations, use **Detect Parameters** to analyze the system
-and build a parameter list. You can then save your system to the **Custom Library**
-(internal JSON storage), add notes, edit entries, or delete them.
-
-<p align="center">
-  <img src="docs/assets/media/addon/mode_custom.png" width="750" alt="Attractor Builder – Custom mode">
-</p>
+<img src="docs/assets/media/addon/mode_custom.png" alt="Custom mode">
 
 ---
 
-### **✓ Simulation Settings**
+### Simulation Settings
 
-You can choose between:
-
-#### **Fixed Step Methods**
+#### Fixed step methods
 
 - Euler  
 - Heun (RK2)  
 - Runge–Kutta 4 (RK4)
 
-Settings include:
+<img src="docs/assets/media/addon/fixed_dt.png" alt="Fixed dt settings">
 
-- **Time Step (dt)**
-- **Steps**
-- **Burn-in**
-- **Scale**
-
-<p align="center">
-  <img src="docs/assets/media/addon/fixed_dt.png" width="750" alt="Attractor Builder – fixed dt settings">
-</p>
-
-#### **Adaptive Step Methods**
+#### Adaptive step methods
 
 - Runge–Kutta–Fehlberg 4(5) (RKF45)  
 - Dormand–Prince 5(4) (DP5)
 
-These methods do **not** use a fixed `dt`.  
-Instead, the step size is chosen automatically based on:
-
-- **Tolerance**  
-- **Min Step**
-- **Max Step**
-
-<p align="center">
-  <img src="docs/assets/media/addon/adaptive_dt.png" width="750" alt="Attractor Builder – adaptive dt settings">
-</p>
+<img src="docs/assets/media/addon/adaptive_dt.png" alt="Adaptive dt settings">
 
 ---
 
-### **✓ Generating and Exporting Trajectories**
+### Raw Data and Export
 
-Click **Build Attractor** to generate a trajectory as a  
-**Poly Curve** object (default name: `Attractor`).  
-After building the trajectory, the **Raw Data** section becomes available.
+After building an attractor, the add-on provides:
 
-- **Points** — creates a mesh containing all generated points  
-- **Export** — saves a CSV file with columns:
-
+- **Points** — a mesh containing all generated points  
+- **Export** — CSV data:  
   `steps, dt, x, y, z`
 
-Row `0` contains the initial conditions.  
-In adaptive methods, `dt` varies at every step.
+`dt` varies for adaptive methods.
 
-<p align="center">
-  <img src="docs/assets/media/addon/output.png" width="750" alt="Attractor Builder – output section">
-</p>
+<img src="docs/assets/media/addon/output.png" alt="Output section">
 
 ---
 
-### **✓ Post-Processing Tools**
+### Post-Processing Tools
 
-Available only after generating an attractor.
+Available after generating a trajectory:
 
-Tools include:
+- **Trim** — remove start/end of the curve  
+- **Simplify** — reduce point count  
+- **Smooth to Bézier**
 
-- **Trim** — cut the beginning or end of the curve  
-- **Simplify** — reduce the number of Poly Curve points  
-- **Smooth to Bezier** — convert to a Bézier curve using a smoothing algorithm  
-
-<p align="center">
-  <img src="docs/assets/media/addon/post_processing.png" width="750" alt="Attractor Builder – post-processing tools">
-</p>
-
-These tools help prepare trajectories for animation or artistic rendering.
+<img src="docs/assets/media/addon/post_processing.png" alt="Post-processing tools">
 
 ---
 
-## 📘 Documentation
+## Documentation
 
-Full documentation (PL/EN) with detailed examples and mathematical explanations is available at:
+Full documentation (PL/EN):
 
-👉 **https://pcabala.github.io/AttractorBuilder/**  
-*(after enabling GitHub Pages for this repository with `/docs` as the source)*
-
----
-
-## 🐞 Feedback & Issues
-
-If you have suggestions, ideas for improvements, or notice any bugs, please open an Issue:
-
-👉 **https://github.com/pcabala/AttractorBuilder/issues**
-
-This helps keep all reports organized and visible to other users.
+**https://pcabala.github.io/AttractorBuilder/**  
+(Enable GitHub Pages with `/docs` as the source.)
 
 ---
 
-## 🧩 Requirements
+## Issues
 
-- **Blender 4.5+**  
-- No external Python installation required  
-- Works on Windows, Linux, and macOS
+If you have suggestions or encounter bugs, please open an Issue:
+
+**https://github.com/pcabala/AttractorBuilder/issues**
 
 ---
 
-## 📝 License
+## Requirements
+
+- Blender **4.5+**  
+- Works on Windows, Linux, macOS  
+- No external Python installation required
+
+---
+
+## License
 
 **GPL-2.0-or-later**
 
 ---
 
-## 🙋‍♂️ Author
+## Author
 
 Paweł Cabała  
 2024–2025
