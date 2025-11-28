@@ -25,18 +25,19 @@ Skala: 0.1
 </pre>
 
 <p>
-<b>Atraktor Arneodo</b> zostaĹ‚ opisany w 1981 roku przez 
-Alaina Arneodo, Paula Coulleta i Christiana Tressera jako przykĹ‚ad nowego mechanizmu
-przejĹ›cia do turbulencji. Autorzy analizowali trĂłjwymiarowe ukĹ‚ady rĂłwnaĹ„
-zachowujÄ…ce symetriÄ™
+<b>Atraktor Arneodo</b> został opisany w 1981 roku przez 
+Alaina Arneodo, Paula Coulleta i Christiana Tressera jako przykład nowego mechanizmu
+przejścia do turbulencji. Autorzy analizowali trójwymiarowe układy równań
+zachowujące symetrię
 \( S: (x, y, z) \mapsto (-x, -y, z) \),
-dla ktĂłrych charakterystyczna jest pojawiajÄ…ca siÄ™ sekwencja stabilnych orbit
-homoklinicznych o coraz bardziej zĹ‚oĹĽonej strukturze. W miarÄ™ zbliĹĽania siÄ™
-parametru sterujÄ…cego do wartoĹ›ci krytycznej ukĹ‚ad przechodzi przez kolejne
-bifurkacje wynikajÄ…ce z rozszczepiania tych orbit, co prowadzi do powstania
-chaotycznego atraktora. Oryginalnyy ukĹ‚ad rĂłwnaĹ„ ma postaÄ‡
-(1981, s. 220, rĂłwn. 11):
+dla których charakterystyczna jest pojawiająca się sekwencja stabilnych orbit
+homoklinicznych o coraz bardziej złożonej strukturze. W miarę zbliżania się
+parametru sterującego do wartości krytycznej układ przechodzi przez kolejne
+bifurkacje wynikające z rozszczepiania tych orbit, co prowadzi do powstania
+chaotycznego atraktora. Oryginalny układ równań ma postać
+(1981, s. 220, równ. 11):
 </p>
+
 
 <p class="mathline">\( \dot{x} = \alpha x - \alpha y \)</p>
 <p class="mathline">\( \dot{y} = -4\alpha y + xz + \mu x^{3} \)</p>
