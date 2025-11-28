@@ -28,7 +28,9 @@ jak i twórców wykorzystujących atraktory w grafice, animacji lub sztuce gener
 <p>
 <b>Instalacja</b><br>
 
-1. Pobierz plik <code>attractor_builder.zip</code> z repozytorium GitHub.<br>
+1. Pobierz plik  <a href="https://github.com/pcabala/AttractorBuilder/raw/main/attractor_builder.zip"
+      style="display:inline-flex;"> attractor_builder.zip</a>
+	  z repozytorium GitHub.<br>
 2. W Blenderze otwórz: Edit → Preferences → Add-ons.<br>
 3. Kliknij <i>Install…</i> i wybierz pobrany plik <code>.zip</code>.<br>
 4. Aktywuj dodatek i upewnij się, że znajduje się na liście.<br>

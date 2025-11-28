@@ -1,21 +1,18 @@
-## Attractor Builder — Blender Add-on
+## Attractor Builder: Blender Add-on
 
 <img src="docs/assets/media/icons/blender.svg" alt="Blender icon">
 
 Attractor Builder is a free Blender add-on for numerical integration and
-3D visualization of nonlinear dynamical systems.  
-It allows you to generate trajectories of differential equations,
+3D visualization of nonlinear dynamical systems. It allows you to generate trajectories of differential equations,
 export raw simulation data, build animated attractors, and experiment with
-both classic and custom chaotic models — directly inside **Blender 4.5+**.
+both classic and custom chaotic models - directly inside **Blender 4.5+**.
 
 ---
 
 ## Installation
 
 1. Download the add-on:
-
    👉 [Download `attractor_builder.zip`](https://github.com/pcabala/AttractorBuilder/raw/main/attractor_builder.zip)
-   
    (Right-click → *“Save link as…”* to choose destination)
 
 2. In Blender, open  
@@ -33,13 +30,16 @@ both classic and custom chaotic models — directly inside **Blender 4.5+**.
 
 ### Default Mode (built-in systems)
 
-A curated set of classic dynamical systems, including Lorenz, Chen, Lü, Thomas,
-Arneodo–Coullet–Tresser, and others.  
+A curated collection of **20 classic dynamical systems** (strange-attractor models), including Lorenz, Chen, Lü, Thomas, Arneodo–Coullet–Tresser, and others.  
 Each system includes:
 
-- differential equations (`dx/dt`, `dy/dt`, `dz/dt`)
+- differential equations (`ẋ`, `ẏ`, `ż`)
 - editable parameters
-- “Copy to Custom Mode”
+- quick export to **Custom Mode**
+
+Detailed descriptions of all predefined systems are available on the add-on documentation page:  
+**https://pcabala.github.io/AttractorBuilder/en/systems/**
+
 
 <img src="docs/assets/media/addon/mode_default.png" alt="Default mode">
 

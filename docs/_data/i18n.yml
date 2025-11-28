@@ -3,12 +3,12 @@ en:
     home: Home
     systems: Systems
     methods: Methods
-    addon: Add-on
+    addon: add-on
     # gallery: Gallery
     about: Info
   paths:
     home: /en/
-    systems: /en/systems/lorenz/
+    systems: /en/systems/
     methods: /en/methods/
     # gallery: /en/gallery/
     addon: /en/addon/
@@ -19,12 +19,12 @@ pl:
     home: Start
     systems: Systemy
     methods: Metody
-    addon: Add-on
+    addon: add-on
     # gallery: Galeria
     about: Info
   paths:
     home: /pl/
-    systems: /pl/systemy/lorenz/
+    systems: /pl/systemy/
     methods: /pl/metody/
     addon: /pl/addon/
     # gallery: /pl/galeria/

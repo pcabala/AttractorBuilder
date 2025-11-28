@@ -19,10 +19,14 @@
      {{ t.nav.methods }}
   </a> |
 
-  <a href="{{ t.paths.addon | relative_url }}"
-     class="{% if current contains '/addon/' %}active{% endif %}">
-     {{ t.nav.addon }}
-  </a> |
+	<a href="{{ t.paths.addon | relative_url }}"
+	   class="{% if current contains '/addon/' %}active{% endif %}">
+	   <img src="{{ '/assets/media/icons/blender-mini.svg' | relative_url }}"
+			alt=""
+			style="width: 17px; height: 17px; vertical-align: middle; margin-right: 3px;">
+	   {{ t.nav.addon }}
+	</a> |
+
 
 <!-- Gallery temporarily disabled
   <a href="{{ t.paths.gallery | relative_url }}"

@@ -13,23 +13,24 @@ title:
     margin: 1rem auto;
 ">
   <p style="font-style: italic; margin: 0;">
-    This website was created for those who wish to better understand the behavior 
-    of nonlinear dynamical systems. It is intended both for researchers and 
-    enthusiasts conducting experiments, as well as for artists and creators who 
-    use attractors in animation, generative art, or other creative projects. 
-    The <a href="/en/systems/lorenz/">Systems</a> section presents twenty well-known 
-    nonlinear differential systems that generate characteristic structures 
-    known as strange attractors. Each system includes a brief visualization 
-    of its trajectories along with references to the original scientific sources. 
-    The <a href="/en/methods/">Methods</a> section provides short explanations 
-    of numerical integration algorithms. The <a href="/en/addon/">Add-on</a> 
-	section describes a Blender plug-in 
-    that enables generating, visualizing, and animating 
-    trajectories in 3D space. Installing the add-on makes it possible to run 
-    your own experiments, modify system parameters, test custom equations, 
-    and create three-dimensional forms based on the dynamics of chaotic systems.
+    This website is intended for anyone interested in exploring and understanding
+    the behavior of nonlinear dynamical systems. It is designed both for researchers
+    conducting numerical experiments and for artists and designers who use attractors
+    in animation, generative art, or other creative projects. The 
+    <a href="{{ '/en/systems/' | relative_url }}"><b>Systems</b></a> section presents twenty well-known nonlinear
+    differential equation models that generate characteristic <i>strange attractor</i> structures.
+    Each page includes a short visualization of the trajectory as well as references
+    to the original publications where the system was first introduced. The
+    <a href="{{ '/en/methods/' | relative_url }}"><b>Methods</b></a> section describes the numerical algorithms
+    used for integrating these systems. Finally, the 
+    <a href="{{ '/en/addon/' | relative_url }}"><b>Add-on</b></a> page introduces the Blender extension
+    that enables generating, visualizing, and animating trajectories in 3D space.
+    Installing the add-on allows you to perform your own experiments, modify system
+    parameters, test custom models, and create three-dimensional forms based on
+    chaotic dynamics.
   </p>
 </div>
+
 
 
 **What is an attractor?**
@@ -81,7 +82,6 @@ and strange attractors is the following selection of books:
 Devaney, R. (2003). <i>An Introduction to Chaotic Dynamical Systems</i>. Westview Press.<br>
 Gleick, J. (1987). <i>Chaos: Making a New Science</i>. Penguin Books.<br>
 Ott, E. (1993). <i>Chaos in Dynamical Systems</i>. Cambridge University Press.<br>
-Sprott, J. C. (2003). <i>Chaos and Time-Series Analysis</i>. Oxford University Press.<br>
 Sprott, J. C. (2010). <i>Elegant Chaos</i>. World Scientific.<br>
 Strogatz, S. H. (2015). <i>Nonlinear Dynamics and Chaos</i>. CRC Press.
 </p>

@@ -370,8 +370,6 @@ def make_or_get_curve(context, name: str) -> tuple[bpy.types.Curve, bpy.types.Ob
     return cu, obj
 
 
-
-
 def write_polyline(curve: bpy.types.Curve, points: list[Vector]):
     """Clears a curve and writes a new polyline spline from a list of points."""
     curve.splines.clear()
@@ -553,6 +551,7 @@ def reset_post_processing_state_update(self, context):
     if props.show_post_processing:
         props.show_post_processing = False
         props.active_curve_name = ""
+
 
 def integration_method_update(self, context):
     """
@@ -810,7 +809,6 @@ class ATTRACTOR_Props(bpy.types.PropertyGroup):
         name="Fidelity (%)",
         default=100.0, min=0.0, max=100.0,
         subtype='PERCENTAGE', update=update_simplify_percent)
-
 
 
 # ==========================================================================
@@ -1540,9 +1538,6 @@ def register():
             update_attractor_defaults(P, bpy.context)
 
     print("Attractor Builder addon registered.")
-
-
-
 
 
 def unregister():

@@ -19,21 +19,22 @@ title:
     zarówno dla osób prowadzących badania i eksperymenty, jak i dla grafików 
     oraz twórców wykorzystujących atraktory w animacji, sztuce generatywnej 
     lub innych projektach kreatywnych. W zakładce 
-    <a href="/pl/systemy/lorenz/">Systemy</a> przedstawiono dwadzieścia znanych nieliniowych
+    <a href="{{ '/pl/systemy/' | relative_url }}"><b>Systemy</b></a> przedstawiono dwadzieścia znanych nieliniowych
     układów równań różniczkowych, które generują charakterystyczne struktury
     zwane atraktorami dziwnymi. Każdy opis zawiera krótką wizualizację
     trajektorii oraz odwołania do źródeł pierwotnych, w których dany układ 
-    został po raz pierwszy opisany. Sekcja <a href="/pl/metody/">Metody</a> 
+    został po raz pierwszy opisany. Sekcja <a href="{{ '/pl/metody/' | relative_url }}"><b>Metody</b></a> 
     prezentuje algorytmy numeryczne wykorzystywane do integracji 
     układów. Z kolei zakładka 
-    <a href="/pl/addon/">Add-on</a> opisuje dodatek do programu Blender, 
-	który umożliwia generowanie, wizualizację 
+    <a href="{{ '/pl/addon/' | relative_url }}"><b>Add-on</b></a> opisuje dodatek do programu Blender, 
+    który umożliwia generowanie, wizualizację 
     i animację trajektorii w przestrzeni 3D. Instalacja dodatku pozwala 
     wykonywać własne eksperymenty, zmieniać parametry równań, testować 
     własne systemy oraz tworzyć trójwymiarowe formy oparte na dynamice 
     układów chaotycznych.
   </p>
 </div>
+
 
 
 **Czym jest atraktor?**
@@ -79,9 +80,8 @@ następujących książek:
 
 <p class="hanging-indent">
 Devaney, R. (2003). <i>An Introduction to Chaotic Dynamical Systems</i>. Westview Press.<br>
-Gleick, J. (1987). <i>Chaos: Making a New Science</i>. Penguin Books.<br>
-Ott, E. (1993). <i>Chaos in Dynamical Systems</i>. Cambridge University Press.<br>
+Gleick, J. (2018). <i>Chaos. Narodziny nowej nauki</i>. Wydawnictwo Zysk i S-ka (tłum. P. Jaśkowski).<br>
+Ott, E. (1997). <i>Chaos w układach dynamicznych</i>. Wydwnictwa Naukowo-Techniczne (tłum. S. Jankowski).<br>
+Schuster, H. G. (1993). <i>Chaos deterministyczny. Wprowadzenie</i>. Wydawnictwo Naukowe PWN (tłum. K. Stefański).
 Sprott, J. C. (2003). <i>Chaos and Time-Series Analysis</i>. Oxford University Press.<br>
-Sprott, J. C. (2010). <i>Elegant Chaos</i>. World Scientific.<br>
-Strogatz, S. H. (2015). <i>Nonlinear Dynamics and Chaos</i>. CRC Press.
 </p>

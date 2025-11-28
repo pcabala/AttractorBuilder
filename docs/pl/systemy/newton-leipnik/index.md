@@ -1,6 +1,6 @@
 ﻿---
 layout: systems
-title: "Atraktor Newton-Leipnik"
+title: "Atraktor Newtona-Leipnika"
 video: "/assets/media/attractors/newton-leipnik.webm"
 video_mp4: "/assets/media/attractors/newton-leipnik.mp4"
 alpha: true
