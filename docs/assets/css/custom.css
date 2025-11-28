@@ -308,12 +308,17 @@ img, svg, video, canvas, iframe {
 /* 2.6 Bloki kodu i tabelki – zapobiegaj „rozpychaniu” ekranu */
 pre, code { white-space: pre-wrap; word-break: break-word; }
 
-/* 2.7 Top nav – ciaśniejszy na bardzo wąskich ekranach */
-@media (max-width: 360px) {
+/* Ciaśniejsze menu i submenu na wąskich ekranach */
+@media (max-width: 480px) {
   nav {
-    gap: 0.4rem 0.6rem;
+    gap: 0.1rem 0.25rem;     /* mniejsze odstępy niż na desktopie */
+  }
+
+  .systems-subnav {
+    gap: 0.05rem 0.2rem;     /* bardzo kompaktowe odstępy między systemami */
   }
 }
+
 
 /* 2.9 Kafelek wideo – mniejsza wysokość na super wąskich ekranach */
 @media (max-width: 360px) {

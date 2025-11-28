@@ -7,6 +7,8 @@ Attractor Builder is a free Blender add-on for numerical integration and
 export raw simulation data, build animated attractors, and experiment with
 both classic and custom chaotic models - directly inside **Blender 4.5+**.
 
+**https://pcabala.github.io/AttractorBuilder/en/**
+
 ---
 
 ## Installation
