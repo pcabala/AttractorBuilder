@@ -1,4 +1,4 @@
-﻿---
+---
 layout: systems
 title: "Atraktor Arneodo"
 video_mp4: "/assets/media/attractors/arneodo.mp4"
@@ -9,20 +9,22 @@ alt_url: /en/systems/arneodo/
 
 <pre class="eq-plain">
 Attractor Builder (dodatek do Blendera)
-<b>RĂłwnania:</b>
-xĚ‡ = a*(x-y)
-yĚ‡ = -4*a*y+x*z+m*x**3
-zĚ‡ = -d*a*z+x*y+b*z**2
+
+<b>Równania:</b>
+ẋ = a*(x - y)
+ẏ = -4*a*y + x*z + m*x**3
+ż = -d*a*z + x*y + b*z**2
 <b>Parametry:</b>
 | a = 1 | b = -0.09 | d = 1.5 | m = 0.01 |
 <b>Ustawienia symulacji:</b>
-Stan poczÄ…tkowy: xâ‚€ = 1, yâ‚€ = 0.1, zâ‚€ = 0.1
+Stan początkowy: x₀ = 1, y₀ = 0.1, z₀ = 0.1
 Metoda: Euler
 Time Step (dt): 0.01
 Steps: 15000
 Burn-in: 1000
 Skala: 0.1
 </pre>
+
 
 <p>
 <b>Atraktor Arneodo</b> został opisany w 1981 roku przez 
