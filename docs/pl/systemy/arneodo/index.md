@@ -43,14 +43,15 @@ chaotycznego atraktora. Oryginalnyy ukĹ‚ad rĂłwnaĹ„ ma postaÄ‡
 <p class="mathline">\( \dot{z} = -\delta \alpha z + xy + \beta z^{2} \)</p>
 
 <p>
-W analizie numerycznej autorzy przyjmujÄ… staĹ‚e parametry
-\(\alpha = 1.8\), \(\beta = -0.07\) oraz \(\delta = 1.5\), a nastÄ™pnie badajÄ… zachowanie ukĹ‚adu
-przy zmianie parametru sterujÄ…cego \(\mu\). Dla \(\mu \approx 0.076071\) pojawia siÄ™ para
-stabilnych orbit homoklinicznych, dla \(\mu = 0.05\) obserwuje siÄ™ stabilnÄ…, symetrycznÄ…
-orbitÄ™ okresowÄ…, natomiast dla \(\mu = 0.034\) â€“ parÄ™ stabilnych orbit bÄ™dÄ…cych swoimi
-obrazami wzglÄ™dem symetrii \(S\). Dalsze zmniejszanie \(\mu\) prowadzi â€“ dla \(\mu = 0.02\) â€“ do powstania
-atraktora o zĹ‚oĹĽonej strukturze geometrycznej.
+W analizie numerycznej autorzy przyjmują stałe parametry
+\(\alpha = 1.8\), \(\beta = -0.07\) oraz \(\delta = 1.5\), a następnie badają zachowanie układu
+przy zmianie parametru sterującego \(\mu\). Dla \(\mu \approx 0.076071\) pojawia się para
+stabilnych orbit homoklinicznych, dla \(\mu = 0.05\) obserwuje się stabilną, symetryczną
+orbitę okresową, natomiast dla \(\mu = 0.034\) – parę stabilnych orbit będących swoimi
+obrazami względem symetrii \(S\). Dalsze zmniejszanie \(\mu\) prowadzi – dla \(\mu = 0.02\) – do powstania
+atraktora o złożonej strukturze geometrycznej.
 </p>
+
 
 
 <p><b>ĹąrĂłdĹ‚o:</b></p>
