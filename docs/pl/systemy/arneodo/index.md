@@ -9,7 +9,6 @@ alt_url: /en/systems/arneodo/
 
 <pre class="eq-plain">
 Attractor Builder (dodatek do Blendera)
-
 <b>Równania:</b>
 ẋ = a*(x - y)
 ẏ = -4*a*y + x*z + m*x**3
