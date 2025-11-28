@@ -17,7 +17,7 @@ layout: default
   </section>
 
 
-  <!-- SECTION 2 — VIDEO -->
+<!-- SECTION 2 — VIDEO -->
 {% if page.video or page.video_mp4 %}
 <section class="sys-video{% if page.alpha %} sys-video--alpha{% endif %}">
   <div class="video-frame">
@@ -27,13 +27,15 @@ layout: default
       muted
       playsinline
       preload="metadata">
-      
-      {% if page.video %}
-      <source src="{{ page.video | relative_url }}" type="video/webm">
-      {% endif %}
 
+      <!-- MP4 PIERWSZE: Safari zawsze to wybierze -->
       {% if page.video_mp4 %}
       <source src="{{ page.video_mp4 | relative_url }}" type="video/mp4">
+      {% endif %}
+
+      <!-- WebM DRUGIE: Chrome/Firefox/Android to wybiorą -->
+      {% if page.video %}
+      <source src="{{ page.video | relative_url }}" type="video/webm">
       {% endif %}
 
       Your browser does not support the video tag.
@@ -41,6 +43,7 @@ layout: default
   </div>
 </section>
 {% endif %}
+
 
 
   <!-- SECTIONS 3–5 — CONTENT FROM PAGE (wrapped in index.md) -->
