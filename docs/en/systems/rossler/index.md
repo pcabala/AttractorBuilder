@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Rössler Attractor"
-video: "/assets/media/attractors/rossler.webm"
 video_mp4: "/assets/media/attractors/rossler.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/rossler/

@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Dadras Attractor"
-video: "/assets/media/attractors/dadras.webm"
 video_mp4: "/assets/media/attractors/dadras.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/dadras/

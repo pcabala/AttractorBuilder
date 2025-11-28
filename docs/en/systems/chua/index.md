@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Chua Attractor"
-video: "/assets/media/attractors/chua.webm"
 video_mp4: "/assets/media/attractors/chua.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/chua/

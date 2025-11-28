@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Li Attractor"
-video: "/assets/media/attractors/li.webm"
 video_mp4: "/assets/media/attractors/li.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/li/

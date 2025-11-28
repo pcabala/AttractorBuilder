@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Atraktor Chena"
-video: "/assets/media/attractors/chen.webm"
 video_mp4: "/assets/media/attractors/chen.mp4"
-alpha: true
 stop_at: 11
 lang: pl
 alt_url: /en/systems/chen/

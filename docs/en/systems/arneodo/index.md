@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Arneodo Attractor"
-video: "/assets/media/attractors/arneodo.webm"
 video_mp4: "/assets/media/attractors/arneodo.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/arneodo/

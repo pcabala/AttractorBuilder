@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Atraktor Langforda"
-video: "/assets/media/attractors/langford.webm"
 video_mp4: "/assets/media/attractors/langford.mp4"
-alpha: true
 stop_at: 11
 lang: pl
 alt_url: /en/systems/langford/

@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Lotka–Volterra Attractor"
-video: "/assets/media/attractors/lotka-volterra.webm"
 video_mp4: "/assets/media/attractors/lotka-volterra.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/lotka-volterra/

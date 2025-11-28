@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Atraktor Newtona-Leipnika"
-video: "/assets/media/attractors/newton-leipnik.webm"
 video_mp4: "/assets/media/attractors/newton-leipnik.mp4"
-alpha: true
 stop_at: 11
 lang: pl
 alt_url: /en/systems/newton-leipnik/

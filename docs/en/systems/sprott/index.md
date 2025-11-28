@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Sprott Attractors"
-video: "/assets/media/attractors/sprott.webm"
 video_mp4: "/assets/media/attractors/sprott.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/sprott/

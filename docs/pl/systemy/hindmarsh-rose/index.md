@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Atraktor Hindmarsha–Rose’a"
-video: "/assets/media/attractors/hindmarsh-rose.webm"
 video_mp4: "/assets/media/attractors/hindmarsh-rose.mp4"
-alpha: true
 stop_at: 11
 lang: pl
 alt_url: /en/systems/hindmarsh-rose/

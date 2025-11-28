@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Rabinovich–Fabrikant Attractor"
-video: "/assets/media/attractors/rabinovich-fabrikant.webm"
 video_mp4: "/assets/media/attractors/rabinovich-fabrikant.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/rabinovich-fabrikant/

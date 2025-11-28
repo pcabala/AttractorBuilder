@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Atraktor Shimizu–Morioka"
-video: "/assets/media/attractors/shimizu-morioka.webm"
 video_mp4: "/assets/media/attractors/shimizu-morioka.mp4"
-alpha: true
 stop_at: 11
 lang: pl
 alt_url: /en/systems/shimizu-morioka/

@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Rikitake Attractor"
-video: "/assets/media/attractors/rikitake.webm"
 video_mp4: "/assets/media/attractors/rikitake.mp4"
-alpha: true
 stop_at: 11
 lang: en
 ---

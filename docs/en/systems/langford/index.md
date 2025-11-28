@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Langford Attractor"
-video: "/assets/media/attractors/langford.webm"
 video_mp4: "/assets/media/attractors/langford.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/langford/

@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Atraktor Burke’a–Shawa"
-video: "/assets/media/attractors/burke-shaw.webm"
 video_mp4: "/assets/media/attractors/burke-shaw.mp4"
-alpha: true
 stop_at: 11
 lang: pl
 alt_url: /en/systems/burke-shaw/

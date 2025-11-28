@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Nosé–Hoover Attractor"
-video: "/assets/media/attractors/nose-hoover.webm"
 video_mp4: "/assets/media/attractors/nose-hoover.mp4"
-alpha: true
 stop_at: 11
 lang: en
 alt_url: /pl/systemy/nose-hoover/

@@ -1,9 +1,7 @@
 ﻿---
 layout: systems
 title: "Atraktor Halvorsena"
-video: "/assets/media/attractors/halvorsen.webm"
 video_mp4: "/assets/media/attractors/halvorsen.mp4"
-alpha: true
 stop_at: 11
 lang: pl
 alt_url: /en/systems/halvorsen/
