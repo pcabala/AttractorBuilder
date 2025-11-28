@@ -18,8 +18,8 @@ layout: default
 
 
   <!-- SECTION 2 — VIDEO -->
-{% if page.video_mp4 %}
-<section class="sys-video">
+{% if page.video or page.video_mp4 %}
+<section class="sys-video{% if page.alpha %} sys-video--alpha{% endif %}">
   <div class="video-frame">
     <video id="sys-video"
       autoplay
@@ -27,13 +27,20 @@ layout: default
       muted
       playsinline
       preload="metadata">
+      
+      {% if page.video %}
+      <source src="{{ page.video | relative_url }}" type="video/webm">
+      {% endif %}
+
+      {% if page.video_mp4 %}
       <source src="{{ page.video_mp4 | relative_url }}" type="video/mp4">
+      {% endif %}
+
       Your browser does not support the video tag.
     </video>
   </div>
 </section>
 {% endif %}
-
 
 
   <!-- SECTIONS 3–5 — CONTENT FROM PAGE (wrapped in index.md) -->
@@ -103,11 +110,25 @@ layout: default
 .sys-video video {
   width: 100%;
   height: 100%;
-  object-fit: cover;                /* tak jak miałeś – format się nie zmieni */
-  border-radius: 14px;              /* trochę mniej niż frame, żeby cień był widoczny */
-  background: #000;                 /* tło przy ładowaniu */
+  object-fit: cover;          
+  border-radius: 14px;
+  background: #000; 
 }
 
+/* Jeśli alpha=true → brak kafelka, brak tła, brak cienia */
+.sys-video.sys-video--alpha .video-frame {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Dla alpha=true również samo video bez czarnego tła i bez zaokrągleń */
+.sys-video.sys-video--alpha video {
+  background: transparent;
+  border-radius: 0;
+  object-fit: contain;   /* opcjonalnie: nie przycina, tylko mieści cały kadr */
+}
 
 /* -----------------------------------------
    3) EQUATIONS & PARAMETERS
