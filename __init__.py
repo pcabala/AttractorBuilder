@@ -29,7 +29,7 @@ import textwrap
 
 def _addon_dir():
     """Returns the installation directory of this addon."""
-    return os.path.dirname(__file__)
+    return os.path.dirname(os.path.realpath(__file__))
 
 
 def _get_user_data_path():
@@ -233,7 +233,13 @@ class AttractorLibraryManager:
 
     def load_defaults(self):
         """Loads default attractors from the addon's bundled JSON file."""
-        path = os.path.join(_addon_dir(), "Lib", "default_attractors.json")
+        base_dir = _addon_dir()
+        path = os.path.join(base_dir, "Lib", "default_attractors.json") 
+        
+        # Debug print to see where Mac is looking
+        if not os.path.exists(path):
+            print(f"[Attractor Error] Could not find file at: {path}")
+
         try:
             with open(path, "r", encoding="utf-8") as f:
                 self.default_systems = json.load(f).get("items", {})
