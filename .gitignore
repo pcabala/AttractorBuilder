@@ -21,3 +21,5 @@ Thumbs.db
 StartDocs.bat
 # Build scripts and artifacts
 attractor_builder.zip
+# Development resources (local only)
+_resources/
