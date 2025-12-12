@@ -28,7 +28,7 @@ and for artists who use attractors in graphics, animation, or generative art.</e
 <p>
 <b>Installation</b><br>
 1. Download the
-   <a href="https://github.com/pcabala/AttractorBuilder/raw/main/attractor_builder.zip"
+   <a href="https://github.com/pcabala/AttractorBuilder/releases/latest/download/attractor_builder.zip"
       style="display:inline-flex;">
       attractor_builder.zip
    </a>
