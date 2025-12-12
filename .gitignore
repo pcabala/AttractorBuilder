@@ -15,4 +15,9 @@ _site/
 .DS_Store
 Thumbs.db
 .vscode/
-.idea/
+.idea/ 
+
+# Lokalne skrypty (nie wysyłać na GitHub)
+StartDocs.bat
+# Build scripts and artifacts
+attractor_builder.zip
