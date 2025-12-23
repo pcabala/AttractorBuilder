@@ -3,7 +3,7 @@
 bl_info = {
     "name": "Attractor Builder",
     "author": "Pawel Cabala",
-    "version": (1, 8, 0),
+    "version": (1, 8, 1),
     "blender": (4, 5, 0),
     "location": "View3D > Sidebar > Attractor",
     "description": "Generate and visualize 3D chaotic attractors.",
