@@ -1,8 +1,8 @@
-# Blender 4.x — Attractor builder (panel + operator)
 
+# Blender 4.x — Attractor builder (panel + operator)
 bl_info = {
     "name": "Attractor Builder",
-    "author": "Paweł Cabała",
+    "author": "Pawel Cabala",
     "version": (1, 8, 0),
     "blender": (4, 5, 0),
     "location": "View3D > Sidebar > Attractor",
@@ -29,7 +29,7 @@ import textwrap
 
 def _addon_dir():
     """Returns the installation directory of this addon."""
-    return os.path.dirname(os.path.realpath(__file__))
+    return os.path.dirname(os.path.abspath(__file__))
 
 
 def _get_user_data_path():
@@ -232,20 +232,25 @@ class AttractorLibraryManager:
         self.custom_enum_cache = [("__NONE__", "<new>", "Create a new custom attractor")]
 
     def load_defaults(self):
-        """Loads default attractors from the addon's bundled JSON file."""
-        base_dir = _addon_dir()
-        path = os.path.join(base_dir, "Lib", "default_attractors.json") 
-        
-        # Debug print to see where Mac is looking
-        if not os.path.exists(path):
-            print(f"[Attractor Error] Could not find file at: {path}")
+            """Loads default attractors from the addon's bundled JSON file."""
+            base_dir = _addon_dir()
+            
+            path = os.path.join(base_dir, "lib", "default_attractors.json")
+            if not os.path.exists(path):
+                path_upper = os.path.join(base_dir, "Lib", "default_attractors.json")
+                if os.path.exists(path_upper):
+                    path = path_upper
 
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                self.default_systems = json.load(f).get("items", {})
-        except (IOError, json.JSONDecodeError) as e:
-            print(f"[Attractor] Default library load failed at '{path}': {e}")
-            self.default_systems = {}
+            if os.path.exists(path):
+                try:
+                    with open(path, "r", encoding="utf-8-sig") as f:
+                        self.default_systems = json.load(f).get("items", {})
+                except (IOError, json.JSONDecodeError) as e:
+                    print(f"[Attractor] Error loading default library: {e}")
+                    self.default_systems = {}
+            else:
+                print(f"[Attractor] Warning: Default library file not found at '{path}'")
+                self.default_systems = {}
 
     def load_customs(self):
         """Loads custom attractors from the user's dedicated config directory."""

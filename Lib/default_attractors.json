@@ -29,7 +29,7 @@
       "details": "Parameter 'm' controls the strength of the cubic term and the complexity of the lobes (larger |m| gives more twisted shapes). 'b' affects stretching and thickness along the z-direction. 'a' rescales the overall time scale (larger 'a' may require smaller 'dt' for stability). 'd' controls damping in z; increasing 'd' compresses the attractor along the z-axis."
     },
 
-    "Burke–Shaw": {
+    "Burke-Shaw": {
       "rhs": {
         "dx": "-a * (x + y)",
         "dy": "-y - a * x * z",
@@ -166,7 +166,7 @@
 	  "details": "The single parameter 'a' controls damping; values near 1.27 lead to a period-doubling route to chaos. Increasing 'a' enhances dissipation and shrinks the attractor; decreasing it enlarges trajectories and increases chaotic behavior."
 	},
 
-	"Hindmarsh–Rose": {
+	"Hindmarsh-Rose": {
 	  "rhs": {
 		"dx": "y - a*x**3 + b*x**2 + I - z",
 		"dy": "c - d*x**2 - y",
@@ -284,7 +284,7 @@
 	  "details": "Parameter 'a' acts as the Prandtl number, shaping coupling strength between x and y. 'b' is the Rayleigh parameter controlling convection strength. 'c' governs vertical contraction; lowering it produces tighter coils, while increasing it expands the attractor vertically."
 	},
 
-	"Lotka–Volterra": {
+	"Lotka-Volterra": {
 	  "rhs": {
 		"dx": "x - x*y + c*x**2 - a*z*x**2",
 		"dy": "-y + x*y",
@@ -338,7 +338,7 @@
 	  "details": "Parameter 'a' controls coupling between x and y; 'b' sets dissipation along z; 'c' governs amplification in y. Varying 'c' within the chaotic range reshapes the double-scroll structure between Lorenz-like and Chen-like behavior."
 	},
 	
-	"Newton–Leipnik": {
+	"Newton-Leipnik": {
 	  "rhs": {
 		"dx": "-b*x + y + 10*y*z",
 		"dy": "-x - b*y + 5*x*z",
@@ -364,7 +364,7 @@
 	  "details": "Parameter 'a' governs vertical stretching; 'b' controls linear damping in x and y. The cubic coupling terms 10*y*z, 5*x*z, and 5*x*y generate strong twisting that produces two coexisting attractors highly sensitive to initial conditions."
 	},
 	
-	"Nosé–Hoover": {
+	"Nosé-Hoover": {
 	  "rhs": {
 		"dx": "y",
 		"dy": "-x - z*y",
@@ -389,7 +389,7 @@
 	  "details": "Parameter 'a' controls the strength of the thermostat feedback. For smaller 'a' the motion is mostly regular; around a ≈ 1.5 the system becomes chaotic. Increasing 'a' further strengthens the coupling in the dz/dt equation and can modify the thickness and folding of the attractor."
 	},
 
-	"Rabinovich–Fabrikant": {
+	"Rabinovich-Fabrikant": {
 	  "rhs": {
 		"dx": "y*(z - 1 + x**2) + a*x",
 		"dy": "x*(3*z + 1 - x**2) + a*y",
@@ -468,7 +468,7 @@
 	  "details": "Parameter 'a' controls linear growth in y, 'b' shifts the z-direction baseline, and 'c' sets the threshold in the z*(x - c) term. Increasing 'c' or decreasing 'a' can move the system from simple limit cycles to chaotic band dynamics."
 	},
 	
-	"Shimizu–Morioka": {
+	"Shimizu-Morioka": {
 	  "rhs": {
 		"dx": "y",
 		"dy": "(1 - z) * x - a * y",
