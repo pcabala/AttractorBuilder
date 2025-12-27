@@ -2,12 +2,12 @@
 # Blender 4.x — Attractor builder (panel + operator)
 bl_info = {
     "name": "Attractor Builder",
-    "author": "Pawel Cabala",
+    "author": "Paweł Cabała",
     "version": (1, 8, 1),
     "blender": (4, 5, 0),
     "location": "View3D > Sidebar > Attractor",
     "description": "Generate and visualize 3D chaotic attractors.",
-    "doc_url": "https://github.com/pcabala/AttractorBuilder",
+    "doc_url": "https://pcabala.github.io/AttractorBuilder/en/",
     "license": "GPL-2.0-or-later",
     "category": "Add Curve",
 }
@@ -835,12 +835,10 @@ class ATTRACTOR_OT_build(bpy.types.Operator):
     def execute(self, context):
         P = context.scene.attractor_props
 
-        target_name = (getattr(P, "output_name", "") or "").strip() or "Attractor"
+        target_name = (getattr(P, "curve_name", "") or "").strip() or "Attractor"
         cu, obj = make_or_get_curve(context, target_name)
         P.active_curve_name = obj.name
         
-        P.show_post_processing = False
-        P.active_curve_name = ""
 
         try:
             if P.mode == "DEFAULT":
