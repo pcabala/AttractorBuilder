@@ -8,7 +8,7 @@ bl_info = {
     "location": "View3D > Sidebar > Attractor",
     "description": "Generate and visualize 3D chaotic attractors.",
     "doc_url": "https://pcabala.github.io/AttractorBuilder/en/",
-    "license": "GPL-2.0-or-later",
+    "license": "GPL-3.0-or-later",
     "category": "Add Curve",
 }
 

@@ -3,14 +3,14 @@ schema_version = "1.0.0"
 id = "attractor_builder"
 version = "1.8.1"
 name = "Attractor Builder"
-tagline = "Generate and visualize 3D chaotic attractors."
+tagline = "Generate and visualize 3D chaotic attractors"
 maintainer = "Paweł Cabała"
 type = "add-on"
 
 website = "https://pcabala.github.io/AttractorBuilder/en/"
 repository = "https://github.com/pcabala/AttractorBuilder"
 
-license = ["SPDX:GPL-2.0-or-later"]
+license = ["SPDX:GPL-3.0-or-later"]
 
 blender_version_min = "4.5.0"
 
