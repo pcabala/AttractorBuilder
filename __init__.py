@@ -1,17 +1,3 @@
-
-# Blender 4.x — Attractor builder (panel + operator)
-bl_info = {
-    "name": "Attractor Builder",
-    "author": "Paweł Cabała",
-    "version": (1, 8, 1),
-    "blender": (4, 5, 0),
-    "location": "View3D > Sidebar > Attractor",
-    "description": "Generate and visualize 3D chaotic attractors.",
-    "doc_url": "https://pcabala.github.io/AttractorBuilder/en/",
-    "license": "GPL-3.0-or-later",
-    "category": "Add Curve",
-}
-
 # ==========================================================================
 # 1. Imports
 # ==========================================================================
@@ -35,11 +21,23 @@ def _addon_dir():
 def _get_user_data_path():
     """
     Returns the full, writable path for the user's custom attractors library.
-    This is the correct, safe location that persists across updates.
+
+    Extension install:
+        Uses per-extension user directory (extension_path_user).
+
+    Legacy add-on / dev install:
+        Falls back to CONFIG to allow local testing.
     """
-    user_config_dir = bpy.utils.user_resource('CONFIG', create=True)    
-    addon_data_dir = os.path.join(user_config_dir, "AttractorBuilder")
+    try:
+        base_dir = bpy.utils.extension_path_user(__package__, create=True)
+        addon_data_dir = os.path.join(base_dir, "data")
+    except Exception:
+        # legacy add-on / development mode only
+        user_config_dir = bpy.utils.user_resource('CONFIG', create=True)
+        addon_data_dir = os.path.join(user_config_dir, "AttractorBuilder")
+
     return os.path.join(addon_data_dir, "custom_attractors.json")
+
 
 
 # ==========================================================================
@@ -257,6 +255,15 @@ class AttractorLibraryManager:
         self.custom_library = {}
         path = _get_user_data_path()
 
+        # Ensure the user library file exists (first run)
+        if not os.path.exists(path):
+            try:
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump({"schema": 1, "items": {}}, f, ensure_ascii=False, indent=2)
+            except OSError as e:
+                print(f"[Attractor] Could not create custom library file at '{path}': {e}")
+
         if os.path.exists(path):
             try:
                 with open(path, "r", encoding="utf-8") as f:
@@ -264,8 +271,6 @@ class AttractorLibraryManager:
             except (IOError, json.JSONDecodeError) as e:
                 print(f"[Attractor] Custom library load failed at '{path}': {e}")
                 self.custom_library = {}
-        
-        self._rebuild_custom_enum()
 
     def save_customs(self) -> bool:
         """Saves the custom library to the user's dedicated config directory."""

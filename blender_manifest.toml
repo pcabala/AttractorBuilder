@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "attractor_builder"
-version = "1.8.1"
+version = "1.8.2"
 name = "Attractor Builder"
 tagline = "Generate and visualize 3D chaotic attractors"
 maintainer = "Paweł Cabała"
