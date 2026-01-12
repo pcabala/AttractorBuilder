@@ -28,13 +28,23 @@ jak i twórców wykorzystujących atraktory w grafice, animacji lub sztuce gener
 <p>
 <b>Instalacja</b><br>
 
-1. Pobierz plik  <a href="https://github.com/pcabala/AttractorBuilder/releases/latest/download/attractor_builder.zip"
-      style="display:inline-flex;"> attractor_builder.zip</a>
-	  z repozytorium GitHub.<br>
-2. W Blenderze otwórz: Edit → Preferences → Add-ons.<br>
-3. Kliknij <i>Install…</i> i wybierz pobrany plik <code>.zip</code>.<br>
-4. Aktywuj dodatek i upewnij się, że znajduje się na liście.<br>
-5. Panel dodatku pojawi się w zakładce N-panel → Attractors:<br>
+<b>Zalecana (Blender Extensions)</b><br>
+1. Otwórz Blender i przejdź do: <i>Edit → Preferences → Extensions</i>.<br>
+2. Wyszukaj <b>Attractor Builder</b> i kliknij <i>Install</i>.<br>
+3. Po instalacji aktywuj rozszerzenie.<br><br>
+
+<b>Instalacja ręczna (z GitHub)</b><br>
+1. Pobierz plik
+   <a href="https://github.com/pcabala/AttractorBuilder/releases/latest/download/attractor_builder.zip"
+      style="display:inline-flex;">
+      attractor_builder.zip
+   </a>
+   z repozytorium GitHub.<br>
+2. W Blenderze otwórz: <i>Edit → Preferences → Extensions</i>.<br>
+3. Kliknij <i>Install from Disk…</i> i wybierz pobrany plik <code>.zip</code>.<br>
+4. Po instalacji aktywuj rozszerzenie.<br><br>
+
+Panel dodatku pojawi się w zakładce N-panel → <b>Attractor</b>.<br>
 </p>
 
 <p style="text-align:left; margin: 1.4em 0;">

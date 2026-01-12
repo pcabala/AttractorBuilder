@@ -27,17 +27,24 @@ and for artists who use attractors in graphics, animation, or generative art.</e
 
 <p>
 <b>Installation</b><br>
+
+<b>Recommended (Blender Extensions)</b><br>
+1. Open Blender and go to: <i>Edit → Preferences → Extensions</i>.<br>
+2. Search for <b>Attractor Builder</b> and click <i>Install</i>.<br>
+3. Enable the extension after installation.<br><br>
+
+<b>Manual installation (from GitHub)</b><br>
 1. Download the
    <a href="https://github.com/pcabala/AttractorBuilder/releases/latest/download/attractor_builder.zip"
       style="display:inline-flex;">
       attractor_builder.zip
    </a>
-   file from the GitHub repository. <br>
+   file from the GitHub repository.<br>
+2. In Blender, open: <i>Edit → Preferences → Extensions</i>.<br>
+3. Click <i>Install from Disk…</i> and select the downloaded <code>.zip</code> file.<br>
+4. Enable the extension after installation.<br><br>
 
-2. In Blender, open: Edit → Preferences → Add-ons.<br>
-3. Click <i>Install…</i> and select the downloaded <code>.zip</code> file.<br>
-4. Enable the add-on and make sure it appears on the list.<br>
-5. The add-on panel will appear in the N-panel → Attractors:<br>
+The add-on panel will appear in the N-panel → <b>Attractor</b>.<br>
 </p>
 
 <p style="text-align:left; margin: 1.4em 0;">
